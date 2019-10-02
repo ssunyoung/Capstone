@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- id속성값은 BoardDAO 인터페이스와 동일하게 설정 -->
+<mapper namespace="com.ssun.everybook.mapper.BoardMapper">
+	<insert id="create">
+		insert into tbl_board (title, writer, publisher,
+		pubdate, img, isbn, org_price, sale_price, grade, content, phone,
+		contraction, place)
+		values(#{title},#{writer},#{publisher},#{pubdate},#{img},#{isbn},#{org_price},#{sale_price},#{grade},#{content},#{phone},#{contraction},#{place})
+	</insert>
+	<select id="read" resultType="com.ssun.everybook.domain.BoardVO">
+		select bno, title, writer,
+		publisher, pubdate, img, isbn, org_price, sale_price, grade, content,
+		phone, contraction, place, regdate, viewcnt
+		from tbl_board
+		where bno = #{bno}
+	</select>
+
+</mapper>
