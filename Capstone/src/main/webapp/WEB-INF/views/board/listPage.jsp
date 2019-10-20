@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -7,7 +8,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>board Register Form</title>
+<title>board List Page</title>
 
 <style type="text/css">
 /*jumbotron*/
@@ -132,10 +133,6 @@ img.blur {
 .happy2 {
 	background: #f4f2e9;
 }
-
-.main-custom {
-	backgournd-color: lightyellow !important;
-}
 </style>
 <body class="happy2">
 	<!-- nav -->
@@ -199,72 +196,82 @@ img.blur {
 	</div>
 	<!-- end of SearchBox -->
 
-	<!-- board Register Form -->
-	<div class="container main-custom">
-		<form role="form" method="post">
-			<div class="box-body">
-				<div class="md-form">
-					<i class="fas fa-pencil-alt prefix"></i>
-					<input type="text" id="form10" class="md-textarea form-control" />
-					<label for="form10">Icon Prefix</label>
-				</div>
-				<div class="form-group">
-					<label for="Title">Title</label> <input type="text" name="title"
-						class="form-control" placeholder="Enter BOOK Title">
-				</div>
-				<div class="form-group">
-					<label for="Writer">Writer</label> <input type="text" name="writer"
-						class="form-control" placeholder="Enter Writer">
-				</div>
-				<div class="form-group">
-					<label for="publisher">publisher</label> <input type="text"
-						name="publisher" class="form-control"
-						placeholder="Enter publisher">
-				</div>
-				<div class="form-group">
-					<label for="pubdate">pubdate</label> <input type="text"
-						name="pubdate" class="form-control"
-						placeholder="Enter publishing date">
-				</div>
-				<div class="form-group">
-					<label for="isbn">isbn</label> <input type="text" name="isbn"
-						class="form-control" placeholder="Enter isbn number">
-				</div>
-				<div class="form-group">
-					<label for="org_price">org_price</label> <input type="text"
-						name="org_price" class="form-control"
-						placeholder="Enter Original price">
-				</div>
-				<div class="form-group">
-					<label for="sale_price">sale_price</label> <input type="text"
-						name="sale_price" class="form-control"
-						placeholder="Enter Sale price">
-				</div>
-				<div class="form-group">
-					<label for="Grade">Grade</label> <input type="text" name="grade"
-						class="form-control" placeholder="Enter book Status ex)상 중 하">
-				</div>
-				<div class="form-group">
-					<label for="Content">Content</label>
-					<textarea class="form-control rounded-0" name="content" rows="10"
-						placeholder="Enter description...."></textarea>
-				</div>
-				<div class="form-group">
-					<label for="phone">phone</label> <input type="text" name="phone"
-						class="form-control" placeholder="Enter your phone number">
-				</div>
-				<div class="form-group">
-					<label for="contraction">contraction</label> <input type="text"
-						name="contraction" class="form-control"
-						placeholder="Enter contraction ways">
-				</div>
-			</div>
-			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</div>
-		</form>
+	<!-- board list All start -->
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th style="width: 10px">BNO</th>
+				<th>Title</th>
+				<th>Writer</th>
+				<!-- <th>publisher</th>
+			<th>pubdate</th>
+			<th>isbn</th>
+			<th>org_price</th>
+			<th>sale_price</th>
+			<th>Grade</th>
+			<th>Content</th>
+			<th>phone</th>
+			<th>contraction</th> -->
+				<th>regDate</th>
+				<th>viewcnt</th>
+			</tr>
+		</thead>
+		<c:forEach items="${list}" var="boardVO">
+			<tr>
+				<td>${boardVO.bno}</td>
+				<td><a
+					href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page)}&bno=${boardVO.bno}'>${boardVO.title}</a></td>
+				<td>${boardVO.writer}</td>
+				<%-- <td>${boardVO.publisher}</td>
+				<td>${boardVO.pubdate}</td>
+				<td>${boardVO.isbn}</td>
+				<td>${boardVO.org_price}</td>
+				<td>${boardVO.sale_price}</td>
+				<td>${boardVO.grade}</td>
+				<td>${boardVO.content}</td>
+				<td>${boardVO.phone}</td>
+				<td>${boardVO.contraction}</td> --%>
+				<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+						value="${boardVO.regDate}" /></td>
+				<td><span class="badge bg-red">${boardVO.viewcnt}</span></td>
+			</tr>
+		</c:forEach>
+	</table>
+	<!-- end of board list All -->
+<h1>changing_5</h1>
+	<!-- paging start 제발 좀 성공해라 좀좆ㅁ좆ㅁ좀ㅈ몸ㅈ -->
+	<div class="text-center">
+		<ul class="pagination">
+			<c:if test="${pageMaker.prev}">
+<%-- 				<li class="page-item">
+				<a class="page-link" href="listPage${pageMaker.makeQuery(pageMaker.startPage -1) }"> &laquo; </a>
+				</li> --%>
+					<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1}">이전</a></li> 
+ 			</c:if>
+
+			<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+				<li class="page-item"
+					<c:out value="${pageMaker.cri.page == idx ?'active':''}" />>
+					<%-- <a class="page-link" href="listPage${pageMaker.makeQuery(idx)}">${idx}</a> --%>
+					 <a class="page-link" href="${idx}">${idx}</a> 
+				</li>
+			</c:forEach>
+
+			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+				<%-- <li class="page-item"><a class="page-link" href="listPage${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li> --%>
+				 <li class="page-item"><a class="page-link" href="${pageMaker.endPage + 1}">다음</a></li> 
+			</c:if>
+		</ul>
 	</div>
-	<!-- end of board Register Form -->
+	<!-- linking with JavaScript -->
+	<form id="jobForm">
+		<input type="hidden" name="page" value="${pageMaker.cri.perPageNum}">
+		<input type="hidden" name="perPageNum"
+			value="${pageMaker.cri.perPageNum}">
+	</form>
+	<!-- end of linking with JavaScript-->
+
+	<!-- end of paging -->
 	<!-- Footer -->
 	<footer class="pt-4 my-md-5 pt-md-5 border-top">
 	<div class="row">
@@ -304,6 +311,19 @@ img.blur {
 	</footer>
 	<!-- Footer end-->
 	<!-- script -->
+	<script>
+		$(".pagination li a").on("click", function(event) {
+			event.preventDefault();
+			var targetPage = $(this).attr("href");
+
+			var jobForm = $("#jobForm");
+			console.log(jobForm)
+			jobForm.find("[name='page']").val(targetPage);
+			jobForm.attr("action", "/board/listPage").attr("method", "get");
+			console.log(jobForm);
+			jobForm.submit();
+		});
+	</script>
 	<script type="text/javascript">
 		$('#collapsibleNavbar').collapse({
 			toggle : false
@@ -312,6 +332,12 @@ img.blur {
 	<script type="text/javascript">
 		function fn_searchList() {
 			var queryWord = $("#queryWord").val();
+		}
+	</script>
+	<script>
+		var msg = '${result}';
+		if (msg == "success") {
+			alert("처리가 완료되었습니다.");
 		}
 	</script>
 </body>

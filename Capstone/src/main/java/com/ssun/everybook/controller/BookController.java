@@ -27,9 +27,9 @@ public class BookController {
 		logger.info("searchList get .............");
 		
 		String addResult = service.aladinBookApi("c언어 익스프레스");
-		service.aladinCrawler();
+		//service.aladinCrawler();
 		service.yes24Crawler();
-		//System.out.println("==================addResult ==>" + addResult);
+		System.out.println("==================addResult ==>" + addResult);
 		request.setAttribute("addResult", addResult);
 		request.setAttribute("queryWord", queryWord);
 		

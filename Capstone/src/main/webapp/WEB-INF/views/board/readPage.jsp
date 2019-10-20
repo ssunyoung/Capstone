@@ -7,7 +7,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>board Register Form</title>
+<title>board Each Read Form</title>
 
 <style type="text/css">
 /*jumbotron*/
@@ -137,6 +137,7 @@ img.blur {
 	backgournd-color: lightyellow !important;
 }
 </style>
+<!-- end of style -->
 <body class="happy2">
 	<!-- nav -->
 	<div class="navbar-wrapper row">
@@ -199,70 +200,80 @@ img.blur {
 	</div>
 	<!-- end of SearchBox -->
 
-	<!-- board Register Form -->
+	<!-- board Register Form with Paging-->
 	<div class="container main-custom">
-		<form role="form" method="post">
+		<form role="form" action="modifyPage" method="post">
+
+			<input type='hidden' name='bno' value="${boardVO.bno}">
+			<input type='hidden' name='page' value="${cri.page}">
+			<input type='hidden' name='perPageNum' value="${cri.perPageNum}">
+		</form>
+
 			<div class="box-body">
-				<div class="md-form">
-					<i class="fas fa-pencil-alt prefix"></i>
-					<input type="text" id="form10" class="md-textarea form-control" />
-					<label for="form10">Icon Prefix</label>
-				</div>
 				<div class="form-group">
 					<label for="Title">Title</label> <input type="text" name="title"
-						class="form-control" placeholder="Enter BOOK Title">
+						class="form-control" value="${boardVO.title}" readonly="readonly"
+						placeholder="Enter BOOK Title">
 				</div>
 				<div class="form-group">
 					<label for="Writer">Writer</label> <input type="text" name="writer"
-						class="form-control" placeholder="Enter Writer">
+						class="form-control" value="${boardVO.writer}" readonly="readonly"
+						placeholder="Enter Writer">
 				</div>
 				<div class="form-group">
 					<label for="publisher">publisher</label> <input type="text"
-						name="publisher" class="form-control"
-						placeholder="Enter publisher">
+						name="publisher" class="form-control" value="${boardVO.publisher}"
+						readonly="readonly" placeholder="Enter publisher">
 				</div>
 				<div class="form-group">
 					<label for="pubdate">pubdate</label> <input type="text"
-						name="pubdate" class="form-control"
-						placeholder="Enter publishing date">
+						name="pubdate" class="form-control" value="${boardVO.pubdate}"
+						readonly="readonly" placeholder="Enter publishing date">
 				</div>
 				<div class="form-group">
 					<label for="isbn">isbn</label> <input type="text" name="isbn"
-						class="form-control" placeholder="Enter isbn number">
+						class="form-control" value="${boardVO.isbn}" readonly="readonly"
+						placeholder="Enter isbn number">
 				</div>
 				<div class="form-group">
 					<label for="org_price">org_price</label> <input type="text"
-						name="org_price" class="form-control"
-						placeholder="Enter Original price">
+						name="org_price" class="form-control" value="${boardVO.org_price}"
+						readonly="readonly" placeholder="Enter Original price">
 				</div>
 				<div class="form-group">
 					<label for="sale_price">sale_price</label> <input type="text"
 						name="sale_price" class="form-control"
+						value="${boardVO.sale_price}" readonly="readonly"
 						placeholder="Enter Sale price">
 				</div>
 				<div class="form-group">
 					<label for="Grade">Grade</label> <input type="text" name="grade"
-						class="form-control" placeholder="Enter book Status ex)상 중 하">
+						class="form-control" value="${boardVO.grade}" readonly="readonly"
+						placeholder="Enter book Status ex)상 중 하">
 				</div>
 				<div class="form-group">
 					<label for="Content">Content</label>
 					<textarea class="form-control rounded-0" name="content" rows="10"
+						value="${boardVO.content}" readonly="readonly"
 						placeholder="Enter description...."></textarea>
 				</div>
 				<div class="form-group">
 					<label for="phone">phone</label> <input type="text" name="phone"
-						class="form-control" placeholder="Enter your phone number">
+						class="form-control" value="${boardVO.phone}" readonly="readonly"
+						placeholder="Enter your phone number">
 				</div>
 				<div class="form-group">
 					<label for="contraction">contraction</label> <input type="text"
 						name="contraction" class="form-control"
+						value="${boardVO.contraction}" readonly="readonly"
 						placeholder="Enter contraction ways">
 				</div>
 			</div>
 			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-warning">Modify</button>
+				<button type="submit" class="btn btn-danger">REMOVE</button>
+				<button type="submit" class="btn btn-primary">List ALL</button>
 			</div>
-		</form>
 	</div>
 	<!-- end of board Register Form -->
 	<!-- Footer -->
@@ -304,6 +315,10 @@ img.blur {
 	</footer>
 	<!-- Footer end-->
 	<!-- script -->
+	<!-- paging script -->
+	<script type="text/javascript">
+	$
+	</script>
 	<script type="text/javascript">
 		$('#collapsibleNavbar').collapse({
 			toggle : false
@@ -313,6 +328,32 @@ img.blur {
 		function fn_searchList() {
 			var queryWord = $("#queryWord").val();
 		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			var formObj = $("form[role='form']");
+
+			console.log(formObj);
+
+			$(".btn-warning").on("click", function() {
+				formObj.attr("action", "/board/modifyPage");
+				formObj.attr("method", "get");
+				formObj.submit();
+			});
+
+			$(".btn-danger").on("click", function() {
+				formObj.attr("action", "/board/removePage");
+				formObj.submit();
+			});
+
+			$(".btn-primary").on("click", function() {
+/* 				self.location = "/board/listAll";
+ */
+ 				formObj.attr("method", "get");
+ 				formObj.attr("action", "/board/listPage");
+ 				formObj.submit()
+			});
+		});
 	</script>
 </body>
 

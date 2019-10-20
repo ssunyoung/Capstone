@@ -7,7 +7,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>board Register Form</title>
+<title>board Each MODIFY</title>
 
 <style type="text/css">
 /*jumbotron*/
@@ -137,6 +137,7 @@ img.blur {
 	backgournd-color: lightyellow !important;
 }
 </style>
+<!-- end of style -->
 <body class="happy2">
 	<!-- nav -->
 	<div class="navbar-wrapper row">
@@ -203,66 +204,75 @@ img.blur {
 	<div class="container main-custom">
 		<form role="form" method="post">
 			<div class="box-body">
-				<div class="md-form">
-					<i class="fas fa-pencil-alt prefix"></i>
-					<input type="text" id="form10" class="md-textarea form-control" />
-					<label for="form10">Icon Prefix</label>
+				<div class="form-group">
+					<label for="bno">BNO</label> <input type='text' name='bno'
+						value="${boardVO.bno}" readonly="readonly" />
 				</div>
+			</div>
+			<div class="box-body">
 				<div class="form-group">
 					<label for="Title">Title</label> <input type="text" name="title"
-						class="form-control" placeholder="Enter BOOK Title">
+						class="form-control" value="${boardVO.title}"
+						placeholder="Enter BOOK Title">
 				</div>
 				<div class="form-group">
 					<label for="Writer">Writer</label> <input type="text" name="writer"
-						class="form-control" placeholder="Enter Writer">
+						class="form-control" value="${boardVO.writer}"
+						placeholder="Enter Writer">
 				</div>
 				<div class="form-group">
 					<label for="publisher">publisher</label> <input type="text"
-						name="publisher" class="form-control"
+						name="publisher" class="form-control" value="${boardVO.publisher}"
 						placeholder="Enter publisher">
 				</div>
 				<div class="form-group">
 					<label for="pubdate">pubdate</label> <input type="text"
-						name="pubdate" class="form-control"
+						name="pubdate" class="form-control" value="${boardVO.pubdate}"
 						placeholder="Enter publishing date">
 				</div>
 				<div class="form-group">
 					<label for="isbn">isbn</label> <input type="text" name="isbn"
-						class="form-control" placeholder="Enter isbn number">
+						class="form-control" value="${boardVO.isbn}"
+						placeholder="Enter isbn number">
 				</div>
 				<div class="form-group">
 					<label for="org_price">org_price</label> <input type="text"
-						name="org_price" class="form-control"
+						name="org_price" class="form-control" value="${boardVO.org_price}"
 						placeholder="Enter Original price">
 				</div>
 				<div class="form-group">
 					<label for="sale_price">sale_price</label> <input type="text"
 						name="sale_price" class="form-control"
-						placeholder="Enter Sale price">
+						value="${boardVO.sale_price}" placeholder="Enter Sale price">
 				</div>
 				<div class="form-group">
 					<label for="Grade">Grade</label> <input type="text" name="grade"
-						class="form-control" placeholder="Enter book Status ex)상 중 하">
+						class="form-control" value="${boardVO.grade}"
+						placeholder="Enter book Status ex)상 중 하">
 				</div>
 				<div class="form-group">
 					<label for="Content">Content</label>
 					<textarea class="form-control rounded-0" name="content" rows="10"
-						placeholder="Enter description...."></textarea>
+						value="${boardVO.content}" placeholder="Enter description...."></textarea>
 				</div>
 				<div class="form-group">
 					<label for="phone">phone</label> <input type="text" name="phone"
-						class="form-control" placeholder="Enter your phone number">
+						class="form-control" value="${boardVO.phone}"
+						placeholder="Enter your phone number">
 				</div>
 				<div class="form-group">
 					<label for="contraction">contraction</label> <input type="text"
 						name="contraction" class="form-control"
+						value="${boardVO.contraction}"
 						placeholder="Enter contraction ways">
 				</div>
 			</div>
-			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</div>
 		</form>
+
+		<div class="box-footer">
+			<button type="submit" class="btn btn-primary">SAVE</button>
+			<button type="submit" class="btn btn-warning">CANCEL</button>
+		</div>
 	</div>
 	<!-- end of board Register Form -->
 	<!-- Footer -->
@@ -313,6 +323,21 @@ img.blur {
 		function fn_searchList() {
 			var queryWord = $("#queryWord").val();
 		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			var formObj = $("form[role='form']");
+
+			console.log(formObj);
+
+			$(".btn-warning").on("click", function() {
+				self.location = "/board/listAll";
+			});
+
+			$(".btn-primary").on("click", function() {
+				formObj.submit();
+			});
+		});
 	</script>
 </body>
 

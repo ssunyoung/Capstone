@@ -10,12 +10,68 @@
 		contraction, place)
 		values(#{title},#{writer},#{publisher},#{pubdate},#{img},#{isbn},#{org_price},#{sale_price},#{grade},#{content},#{phone},#{contraction},#{place})
 	</insert>
-	<select id="read" resultType="com.ssun.everybook.domain.BoardVO">
+
+	<select id="read" resultType="BoardVO">
 		select bno, title, writer,
 		publisher, pubdate, img, isbn, org_price, sale_price, grade, content,
 		phone, contraction, place, regdate, viewcnt
 		from tbl_board
-		where bno = #{bno}
+		where bno =
+		#{bno}
 	</select>
 
+	<update id="update">
+		update tbl_board set title=#{title},
+		writer=#{writer},
+		publisher=#{publisher}, pubdate=#{pubdate},
+		img=#{img}, isbn=#{isbn},
+		org_price=#{org_price},
+		sale_price=#{sale_price}, grade=#{grade}, content=#{content},
+		phone=#{phone}, contraction=#{contraction}, place=#{place} where bno
+		=#{bno}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+
+	<select id="listAll"
+		resultType="BoardVO">
+	<![CDATA[
+	select bno, title, writer, publisher, pubdate, img, isbn, org_price, sale_price, grade, content, phone, contraction, place, regdate, viewcnt
+	from tbl_board
+	where bno > 0
+	order by bno desc, regdate desc]]>
+	</select>
+
+	<select id="listPage" resultType="BoardVO">
+	<![CDATA[
+	select bno, title, writer, publisher, pubdate, img, isbn, org_price, sale_price, grade, content, phone, contraction, place, regdate, viewcnt
+	from tbl_board
+	where bno > 0
+	order by bno desc, regdate desc
+	limit #{page}, 10
+	]]>
+	</select>
+
+	<select id="listCriteria" resultType="BoardVO">
+	<![CDATA[
+	select bno, title, writer, publisher, pubdate, img, isbn, org_price, sale_price, grade, content, phone, contraction, place, regdate, viewcnt
+	from tbl_board
+	where bno > 0
+	order by bno desc, regdate desc
+	limit #{pageStart}, #{perPageNum}
+	]]>
+	</select>
+
+	<select id="countPaging" resultType="int">
+	<![CDATA[
+	select
+		count(bno)
+	from
+		tbl_board
+	where
+		bno > 0
+		]]>
+	</select>
 </mapper>
