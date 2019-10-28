@@ -1,5 +1,7 @@
 package com.ssun.everybook;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
@@ -8,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ssun.everybook.controller.BookController;
+import com.ssun.everybook.domain.BoardVO;
+import com.ssun.everybook.domain.SearchCriteria;
 import com.ssun.everybook.persistence.BoardDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -59,7 +61,7 @@ public class BoardDAOTest {
 	 * logger.info(boardVO.getBno()+":"+boardVO.getTitle()); } }
 	 */
 
-	@Test // url test
+	/*@Test // url test
 	public void testURI() throws Exception {
 
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().path("/board/read").queryParam("bno", 12)
@@ -77,5 +79,25 @@ public class BoardDAOTest {
 
 		logger.info("/board/read?bno=12&perPageNum=20");
 		logger.info(uriComponents.toString());
+	}*/
+	
+	@Test //dynamic sql 
+	public void testDynamic1() throws Exception{
+		SearchCriteria cri = new SearchCriteria();
+		cri.setPage(1);
+		cri.setKeyword("글");
+		cri.setSearchType("t");
+		
+		logger.info("====================================================================");
+		
+		List<BoardVO> list = dao.listSearch(cri);
+		
+		for(BoardVO boardVO : list) {
+			logger.info(boardVO.getBno() + ": "+boardVO.getTitle());
+		}
+		
+		logger.info("===========================================");
+		
+		logger.info("COUNT: " + dao.listSearchCount(cri));
 	}
 }

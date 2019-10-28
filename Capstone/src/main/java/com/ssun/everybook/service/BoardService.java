@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssun.everybook.domain.BoardVO;
 import com.ssun.everybook.domain.Criteria;
+import com.ssun.everybook.domain.SearchCriteria;
 
 @Service
 public interface BoardService {
@@ -22,7 +23,11 @@ public interface BoardService {
 
 	// paging 관련
 	public List<BoardVO> listCriteria(Criteria cri) throws Exception;
-
 	public int listCountCriteria(Criteria cri) throws Exception;
+	
+	//search 관련
+	public List<BoardVO> listSearchCriteria(SearchCriteria cri) throws Exception;
+	public int listSearchCount(SearchCriteria cri) throws Exception;
+	
 
 }

@@ -8,7 +8,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>board List Page</title>
+<title>board List Page + searching</title>
 
 <style type="text/css">
 /*jumbotron*/
@@ -167,66 +167,59 @@ img.blur {
 		<br>
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-10 col-lg-8">
-				<form class="card card-sm">
-					<div class="card-body row no-gutters align-items-center">
-						<div class="col-auto">
-							<i class="fas fa-search h4 text-body"></i>
-						</div>
-						<!--end of col-->
-						<div class="col-auto">
-							<select class="form-control" name="searchType">
-								<option value="n"
-									<c:out value ="${cri.searchType == null?'selected':''}" />>전체검색</option>
-								<option value="t"
-									<c:out value ="${cri.searchType eq 't'?'selected':''}" />>Title</option>
-								<option value="c"
-									<c:out value ="${cri.searchType eq 'c'?'selected':''}" />>Content</option>
-								<option value="w"
-									<c:out value ="${cri.searchType eq 'w'?'selected':''}" />>Writer</option>
-								<option value="tc"
-									<c:out value ="${cri.searchType eq 'tc'?'selected':''}" />>Title
-									OR Content</option>
-								<option value="cw"
-									<c:out value ="${cri.searchType eq 'cw'?'selected':''}" />>Content
-									OR Writer</option>
-								<option value="tcw"
-									<c:out value ="${cri.searchType eq 'tcw'?'selected':''}" />>Title
-									OR Content OR Writer</option>
-							</select>
-						</div>
-						<div class="col">
-							<form action="/everybook/book" method="POST">
-								<input
-									class="form-control form-control-lg form-control-borderless"
-									type="text" placeholder="Search topics or keywords"
-									name='keyword' id="keywordInput" value='${cri.keyword}'>
-								<!-- 								<a href="javascript:fn_searchList()" name="queryWord"
-									id="queryWord">Search</a> -->
-						</div>
-						<!--end of col-->
-						<div class="col-auto">
-							<button id="searchBtn" class="btn btn-lg btn-warning">Search</button>
-			<%-- 				<input type="text" name='keyword' id="keywordInput"
-								value='${cri.keyword}'>
-							<button id="searchBtn">Search</button> --%>
-							<button id="newBtn">New Board</button>
-						</div>
-				</form>
-				<!--end of col-->
-			</div>
-		</div>
-		<!--end of col-->
-	</div>
-	<!-- end of SearchBox -->
+				<div class="card-body row no-gutters align-items-center">
+					<div class="col-auto">
+						<i class="fas fa-search h4 text-body"></i>
+					</div>
+					<!--end of col-->
+					<div class="col-auto">
+						<select class="form-control" name="searchType">
+							<option value="n"
+								<c:out value ="${cri.searchType == null?'selected':''}" />>전체검색</option>
+							<option value="t"
+								<c:out value ="${cri.searchType eq 't'?'selected':''}" />>Title</option>
+							<option value="c"
+								<c:out value ="${cri.searchType eq 'c'?'selected':''}" />>Content</option>
+							<option value="w"
+								<c:out value ="${cri.searchType eq 'w'?'selected':''}" />>Writer</option>
+							<option value="tc"
+								<c:out value ="${cri.searchType eq 'tc'?'selected':''}" />>Title
+								OR Content</option>
+							<option value="cw"
+								<c:out value ="${cri.searchType eq 'cw'?'selected':''}" />>Content
+								OR Writer</option>
+							<option value="tcw"
+								<c:out value ="${cri.searchType eq 'tcw'?'selected':''}" />>Title
+								OR Content OR Writer</option>
+						</select>
+					</div>
 
-	<!-- board list All start -->
-	<table class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<th style="width: 10px">BNO</th>
-				<th>Title</th>
-				<th>Writer</th>
-				<!-- <th>publisher</th>
+					<div class="col-auto">
+						<input
+							class="form-control form-control-lg form-control-borderless"
+							type="text" placeholder="Search topics or keywords"
+							name='keyword' id="keywordInput" value='${cri.keyword}' />
+					</div>
+					<!--end of col-->
+					<div class="col-auto">
+						<button id="searchBtn" class="btn btn-lg btn-warning">Search</button>
+						<button id="newBtn">New Board</button>
+					</div>
+					<!--end of col-->
+				</div>
+			</div>
+			<!--end of col-->
+		</div>
+		<!-- end of SearchBox -->
+
+		<!-- board list All start -->
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th style="width: 10px">BNO</th>
+					<th>Title</th>
+					<th>Writer</th>
+					<!-- <th>publisher</th>
 			<th>pubdate</th>
 			<th>isbn</th>
 			<th>org_price</th>
@@ -235,17 +228,21 @@ img.blur {
 			<th>Content</th>
 			<th>phone</th>
 			<th>contraction</th> -->
-				<th>regDate</th>
-				<th>viewcnt</th>
-			</tr>
-		</thead>
-		<c:forEach items="${list}" var="boardVO">
-			<tr>
-				<td>${boardVO.bno}</td>
-				<td><a
-					href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page)}&bno=${boardVO.bno}'>${boardVO.title}</a></td>
-				<td>${boardVO.writer}</td>
-				<%-- <td>${boardVO.publisher}</td>
+					<th>regDate</th>
+					<th>viewcnt</th>
+				</tr>
+			</thead>
+			<c:forEach items="${list}" var="boardVO">
+				<tr>
+					<td>${boardVO.bno}</td>
+					<td>
+						<%-- <a
+						href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page)}&bno=${boardVO.bno}'>${boardVO.title}</a> --%>
+						<a
+						href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page)}&bno=${boardVO.bno}'>${boardVO.title}</a>
+					</td>
+					<td>${boardVO.writer}</td>
+					<%-- <td>${boardVO.publisher}</td>
 				<td>${boardVO.pubdate}</td>
 				<td>${boardVO.isbn}</td>
 				<td>${boardVO.org_price}</td>
@@ -254,118 +251,122 @@ img.blur {
 				<td>${boardVO.content}</td>
 				<td>${boardVO.phone}</td>
 				<td>${boardVO.contraction}</td> --%>
-				<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-						value="${boardVO.regDate}" /></td>
-				<td><span class="badge bg-red">${boardVO.viewcnt}</span></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<!-- end of board list All -->
-	<h1>changing_5</h1>
-	<!-- paging start 제발 좀 성공해라 좀좆ㅁ좆ㅁ좀ㅈ몸ㅈ -->
-	<div class="text-center">
-		<ul class="pagination">
-			<c:if test="${pageMaker.prev}">
-				<%-- 				<li class="page-item">
+					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+							value="${boardVO.regDate}" /></td>
+					<td><span class="badge bg-red">${boardVO.viewcnt}</span></td>
+				</tr>
+			</c:forEach>
+		</table>
+		<!-- end of board list All -->
+		<!-- paging start 제발 좀 성공해라 좀좆ㅁ좆ㅁ좀ㅈ몸ㅈ -->
+		<div class="text-center">
+			<ul class="pagination">
+				<c:if test="${pageMaker.prev}">
+					<%-- 				<li class="page-item">
 				<a class="page-link" href="listPage${pageMaker.makeQuery(pageMaker.startPage -1) }"> &laquo; </a>
 				</li> --%>
-				<li class="page-item"><a class="page-link"
-					href="${pageMaker.startPage -1}">이전</a></li>
-			</c:if>
+					<%-- 					<li class="page-item"><a class="page-link"
+						href="${pageMaker.startPage -1}">이전</a></li> --%>
+					<li class="page-item"><a class="page-link"
+						href="list${pageMaker.makeSearch(pageMaker.startPage-1)}">&laquo;</a></li>
+				</c:if>
 
-			<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
-				var="idx">
-				<li class="page-item"
-					<c:out value="${pageMaker.cri.page == idx ?'active':''}" />>
-					<%-- <a class="page-link" href="listPage${pageMaker.makeQuery(idx)}">${idx}</a> --%>
-					<a class="page-link" href="${idx}">${idx}</a>
-				</li>
-			</c:forEach>
+				<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
+					var="idx">
+					<li class="page-item"
+						<c:out value="${pageMaker.cri.page == idx ?'active':''}" />>
+						<%-- <a class="page-link" href="listPage${pageMaker.makeQuery(idx)}">${idx}</a> --%>
+						<%-- <a class="page-link" href="${idx}">${idx}</a> --%> <a
+						class="page-link" href="list${pageMaker.makeSearch(idx)}">${idx}</a>
+					</li>
+				</c:forEach>
 
-			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-				<%-- <li class="page-item"><a class="page-link" href="listPage${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li> --%>
-				<li class="page-item"><a class="page-link"
-					href="${pageMaker.endPage + 1}">다음</a></li>
-			</c:if>
-		</ul>
-	</div>
-	<!-- linking with JavaScript -->
-	<form id="jobForm">
-		<input type="hidden" name="page" value="${pageMaker.cri.perPageNum}">
-		<input type="hidden" name="perPageNum"
-			value="${pageMaker.cri.perPageNum}">
-	</form>
-	<!-- end of linking with JavaScript-->
-
-	<!-- end of paging -->
-	<!-- Footer -->
-	<footer class="pt-4 my-md-5 pt-md-5 border-top">
-	<div class="row">
-		<div class="col-12 col-md">
-			<small class="d-block mb-3 text-muted">© 2017-2018</small>
-		</div>
-		<div class="col-6 col-md">
-			<h5>Features</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Cool stuff</a></li>
-				<li><a class="text-muted" href="#">Random feature</a></li>
-				<li><a class="text-muted" href="#">Team feature</a></li>
-				<li><a class="text-muted" href="#">Stuff for developers</a></li>
-				<li><a class="text-muted" href="#">Another one</a></li>
-				<li><a class="text-muted" href="#">Last time</a></li>
+				<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					<%-- <li class="page-item"><a class="page-link" href="listPage${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li> --%>
+					<%-- 	<li class="page-item"><a class="page-link"
+						href="${pageMaker.endPage + 1}">다음</a></li> --%>
+					<li class="page-item"><a class="page-link"
+						href="list${pageMaker.makeSearch(pageMaker.endPage+1)}">다음</a></li>
+				</c:if>
 			</ul>
 		</div>
-		<div class="col-6 col-md">
-			<h5>Resources</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Resource</a></li>
-				<li><a class="text-muted" href="#">Resource name</a></li>
-				<li><a class="text-muted" href="#">Another resource</a></li>
-				<li><a class="text-muted" href="#">Final resource</a></li>
-			</ul>
-		</div>
-		<div class="col-6 col-md">
-			<h5>About</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Team</a></li>
-				<li><a class="text-muted" href="#">Locations</a></li>
-				<li><a class="text-muted" href="#">Privacy</a></li>
-				<li><a class="text-muted" href="#">Terms</a></li>
-			</ul>
-		</div>
-	</div>
-	</footer>
-	<!-- Footer end-->
-	<!-- script -->
-	<script>
-		$(".pagination li a").on("click", function(event) {
-			event.preventDefault();
-			var targetPage = $(this).attr("href");
+		<!-- linking with JavaScript -->
+		<form id="jobForm">
+			<input type="hidden" name="page" value="${pageMaker.cri.perPageNum}">
+			<input type="hidden" name="perPageNum"
+				value="${pageMaker.cri.perPageNum}">
+		</form>
+		<!-- end of linking with JavaScript-->
 
-			var jobForm = $("#jobForm");
-			console.log(jobForm)
-			jobForm.find("[name='page']").val(targetPage);
-			jobForm.attr("action", "/board/listPage").attr("method", "get");
-			console.log(jobForm);
-			jobForm.submit();
-		});
-	</script>
-	<script type="text/javascript">
-		$('#collapsibleNavbar').collapse({
-			toggle : false
-		})
-	</script>
-<!-- 	<script type="text/javascript">
-		function fn_searchList() {
-			var queryWord = $("#queryWord").val();
-		}
-	</script> -->
-	<script>
-		var msg = '${result}';
-		if (msg == "success") {
-			alert("처리가 완료되었습니다.");
-		}
-	</script>
+		<!-- end of paging -->
+		<!-- Footer -->
+		<footer class="pt-4 my-md-5 pt-md-5 border-top">
+		<div class="row">
+			<div class="col-12 col-md">
+				<small class="d-block mb-3 text-muted">© 2017-2018</small>
+			</div>
+			<div class="col-6 col-md">
+				<h5>Features</h5>
+				<ul class="list-unstyled text-small">
+					<li><a class="text-muted" href="#">Cool stuff</a></li>
+					<li><a class="text-muted" href="#">Random feature</a></li>
+					<li><a class="text-muted" href="#">Team feature</a></li>
+					<li><a class="text-muted" href="#">Stuff for developers</a></li>
+					<li><a class="text-muted" href="#">Another one</a></li>
+					<li><a class="text-muted" href="#">Last time</a></li>
+				</ul>
+			</div>
+			<div class="col-6 col-md">
+				<h5>Resources</h5>
+				<ul class="list-unstyled text-small">
+					<li><a class="text-muted" href="#">Resource</a></li>
+					<li><a class="text-muted" href="#">Resource name</a></li>
+					<li><a class="text-muted" href="#">Another resource</a></li>
+					<li><a class="text-muted" href="#">Final resource</a></li>
+				</ul>
+			</div>
+			<div class="col-6 col-md">
+				<h5>About</h5>
+				<ul class="list-unstyled text-small">
+					<li><a class="text-muted" href="#">Team</a></li>
+					<li><a class="text-muted" href="#">Locations</a></li>
+					<li><a class="text-muted" href="#">Privacy</a></li>
+					<li><a class="text-muted" href="#">Terms</a></li>
+				</ul>
+			</div>
+		</div>
+		</footer>
+		<!-- Footer end-->
+		<!-- script -->
+		<script>
+			$(document).ready(
+					function() {
+						$('#searchBtn').on(
+								"click",
+								function(event) {
+									self.location = "/sboard/list"
+											+ '${pageMaker.makeQuery(1)}'
+											+ "&searchType="
+											+ $("select option:selected").val()
+											+ "&keyword="
+											+ $('#keywordInput').val();
+								});
+						$('#newBtn').on("click", function(evt) {
+							self.location = "register";
+						});
+					});
+		</script>
+		<script type="text/javascript">
+			$('#collapsibleNavbar').collapse({
+				toggle : false
+			})
+		</script>
+		<script>
+			var msg = '${result}';
+			if (msg == "success") {
+				alert("처리가 완료되었습니다.");
+			}
+		</script>
 </body>
 
 </html>

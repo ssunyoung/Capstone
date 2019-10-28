@@ -35,8 +35,7 @@
 		delete from tbl_board where bno = #{bno}
 	</delete>
 
-	<select id="listAll"
-		resultType="BoardVO">
+	<select id="listAll" resultType="BoardVO">
 	<![CDATA[
 	select bno, title, writer, publisher, pubdate, img, isbn, org_price, sale_price, grade, content, phone, contraction, place, regdate, viewcnt
 	from tbl_board
@@ -74,4 +73,96 @@
 		bno > 0
 		]]>
 	</select>
+
+	<!-- DYNAMIC SQL -->
+	<select id="listSearch" resultType="BoardVO">
+	
+	<![CDATA[
+	select 
+		*
+	from 
+		tbl_board
+	where 
+		bno > 0
+	]]>
+
+		<include refid="search"></include>
+		
+	<![CDATA[
+		order by bno desc
+		limit #{pageStart}, #{perPageNum}
+	]]>
+
+	</select>
+
+
+
+	<select id="listSearchCount" resultType="int">
+		
+		<![CDATA[
+			select 
+				count(bno)
+			from 
+				tbl_board
+			where 
+				bno > 0
+		]]>
+
+		<include refid="search"></include>
+
+	</select>
+
+	<sql id="search">
+		<if test="searchType != null">
+		<!--  수정 요망 -->
+			<if test="searchType == 'n'.toString()">
+				AND (
+				title LIKE CONCAT('%', #{keyword}, '%')
+				OR
+				content
+				LIKE CONCAT('%',
+				#{keyword}, '%')
+				OR
+				writer LIKE CONCAT('%',
+				#{keyword}, '%')
+				)
+			</if>
+			<if test="searchType == 't'.toString()">
+				AND title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				AND content LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND writer LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				AND (
+				title LIKE CONCAT('%', #{keyword}, '%')
+				OR
+				content
+				LIKE CONCAT('%', #{keyword}, '%')
+				)
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				AND (
+				content LIKE CONCAT('%', #{keyword}, '%')
+				OR
+				writer
+				LIKE CONCAT('%', #{keyword}, '%')
+				)
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				AND (
+				title LIKE CONCAT('%', #{keyword}, '%')
+				OR
+				content
+				LIKE CONCAT('%', #{keyword}, '%')
+				OR
+				writer LIKE CONCAT('%',
+				#{keyword}, '%')
+				)
+			</if>
+		</if>
+	</sql>
 </mapper>

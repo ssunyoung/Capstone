@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssun.everybook.domain.BoardVO;
 import com.ssun.everybook.domain.Criteria;
+import com.ssun.everybook.domain.SearchCriteria;
 
 public interface BoardDAO {
 
@@ -22,4 +23,9 @@ public interface BoardDAO {
 	public List<BoardVO> listPage(int page) throws Exception;
 	public List<BoardVO> listCriteria(Criteria cri) throws Exception;
 	public int countPaging(Criteria cri)throws Exception;
+	
+	//searching 관련
+	
+	public List<BoardVO> listSearch(SearchCriteria cri)throws Exception;
+	public int listSearchCount (SearchCriteria cri)throws Exception;
 }

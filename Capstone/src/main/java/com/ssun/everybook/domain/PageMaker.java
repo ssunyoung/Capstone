@@ -1,5 +1,8 @@
 package com.ssun.everybook.domain;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -97,18 +100,35 @@ public class PageMaker {
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
 				.queryParam("perPageNum", cri.getPerPageNum()).build();
 
-		System.out.println("+++++++++++++++++++++++++" + uriComponents.toUriString());
+		 System.out.println("+***********************************" +uriComponents.toUriString());
 
 		return uriComponents.toUriString();
 	}
 
 	// Searching~
 	public String makeSearch(int page) {
-		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
 				.queryParam("perPageNum", cri.getPerPageNum())
 				.queryParam("searchType", ((SearchCriteria) cri).getSearchType())
-				.queryParam("keyword", ((SearchCriteria) cri).getKeyword()).build();
+				.queryParam("keyword", encoding(((SearchCriteria) cri).getKeyword())).build();
+		
+		System.out.println("++++++++++Pagemaker_makeSearch()+++++++++++++++" + uriComponents.toUriString());
+		
 		return uriComponents.toUriString();
+	}
+
+	//encoding
+	private String encoding(String keyword) {
+		if (keyword == null || keyword.trim().length() == 0) {
+			return "";
+		}
+
+		try {
+			return URLEncoder.encode(keyword, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
 	}
 
 }

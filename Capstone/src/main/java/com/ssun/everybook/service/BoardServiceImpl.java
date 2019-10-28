@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ssun.everybook.domain.BoardVO;
 import com.ssun.everybook.domain.Criteria;
+import com.ssun.everybook.domain.SearchCriteria;
 import com.ssun.everybook.persistence.BoardDAO;
 
 @Repository
@@ -41,6 +42,8 @@ public class BoardServiceImpl implements BoardService {
 		return dao.listAll();
 	}
 
+	
+	//paging
 	@Override
 	public List<BoardVO> listCriteria(Criteria cri) throws Exception {
 		return dao.listCriteria(cri);
@@ -49,6 +52,17 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int listCountCriteria(Criteria cri) throws Exception {
 		return dao.countPaging(cri);
+	}
+	
+	//for searching + paging
+	@Override
+	public List<BoardVO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return dao.listSearch(cri);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return dao.listSearchCount(cri);
 	}
 
 }

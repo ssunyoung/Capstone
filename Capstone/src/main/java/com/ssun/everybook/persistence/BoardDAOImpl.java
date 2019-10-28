@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ssun.everybook.domain.BoardVO;
 import com.ssun.everybook.domain.Criteria;
+import com.ssun.everybook.domain.SearchCriteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -64,6 +65,18 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int countPaging(Criteria cri) throws Exception {
 		return session.selectOne(namespace + ".countPaging", cri);
+	}
+
+	
+	//for searching
+	@Override
+	public List<BoardVO> listSearch(SearchCriteria cri) throws Exception {
+		return session.selectList(namespace + ".listSearch", cri);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return session.selectOne(namespace + ".listSearchCount", cri);
 	}
 
 }
