@@ -1,0 +1,75 @@
+/*BOOK START*/
+/*  bookshelf start*/
+.book {
+	padding: 15px 0 0 0;
+	margin: auto;
+	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	background-color: #ffaf00;
+	width: 150px;
+	height: 205px;
+	margin-top: 10px;
+}
+
+.book-default {
+	padding: 15px 0 0 0;
+	margin: auto;
+	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	width: 150px;
+	height: 205px;
+	margin-top: 10px;
+	background-color: #f8bd3a;
+}
+
+.book-font {
+	font-size: 10rem;
+	font-family: -webkit-pictograph;
+	color: black;
+}
+
+.fold {
+	position: relative;
+	-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+}
+
+.fold:before {
+	content: "";
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 0px;
+	height: 0px;
+	border-bottom: 45px solid #eee;
+	border-left: 45px solid #f8bd3a;
+	/*Set to background color, not transparent!*/
+	-webkit-box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+	box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+}
+
+.shelf {
+	border-bottom: 30px solid #613a0f;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	top: -15px;
+	z-index: -10;
+}
+
+/*Example adding pseudo element to give shelf depth*/
+.shelf:after {
+	content: '';
+	background: #402508;
+	height: 20px;
+	width: calc(100% + 40px); /*IE9+*/
+	position: absolute;
+	top: 30px;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	margin: 0 -20px;
+}

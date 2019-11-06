@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <title>mainPage</title>
+<link href="resources/css/book.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 /*jumbotron*/
@@ -58,7 +59,6 @@ img.blur {
 	.navbar-custom {
 		-webkit-border-radius: 5px;
 		-moz-border-radius: 3px;
-		border-radius: 3px;
 		background-color: #f8bd3a;
 		width: auto;
 		color: black;
@@ -66,14 +66,6 @@ img.blur {
 	.nav-item a, .navbar-brand {
 		color: black;
 	}
-}
-
-.navbar-custom {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: #f8bd3a;
-	color: black;
 }
 
 .navbar-toggler-icon {
@@ -110,7 +102,6 @@ img.blur {
 	top: -2px;
 	right: 0;
 	left: 0;
-	margin-top: 20px;
 	z-index: 20;
 	width: auto;
 	color: #f8bd3a;
@@ -120,146 +111,234 @@ img.blur {
 	color: #f8bd3a;
 }
 
+.navbar-default {
+	background-color: black;
+	transition: 500ms ease;
+	background: transparent;
+}
+
+.navbar-default.scrolled {
+	background: #000;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.navbar-default.scrolled a {
+	color: #f8bd3a;
+}
+
+.navbar-brand, .nav-link {
+	color: black;
+}
+
 /*navbar end*/
-.happy {
-	color: saddlebrown;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+body {
+	background-color: #f4f2e9;
+	background-image:
+		url("https://www.transparenttextures.com/patterns/wood-pattern.png");
 }
 </style>
 <body>
 	<!-- nav -->
 	<div class="navbar-wrapper">
-		<div class="container">
-			<nav class="navbar navbar-expand-lg navbar-custom"> <a
-				class="navbar-brand" href="#">LOGO</a> <!-- hamburger menu -->
-			<button class="navbar-toggler custom-toggler" type="button"
-				data-toggle="collapse" data-target="#collapsibleNavbar">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="collapsibleNavbar">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-				</ul>
-			</div>
-			</nav>
+		<nav class="navbar navbar-expand-lg navbar-default fixed-top"> <a
+			class="navbar-brand" href="/"><b>북-북</b></a> <!-- hamburger menu -->
+		<button class="navbar-toggler custom-toggler" type="button"
+			data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="/sboard/list">북-북
+						게시판</a></li>
+				<li class="nav-item"><a class="nav-link" href="/bookbook/book">마이
+						북-북</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+			</ul>
 		</div>
+		</nav>
 	</div>
 	<!-- /nav -->
 
 	<!--jumbotron -->
 	<div class="jumbotron jumbotron-fluid bg-dark">
-
 		<div class="jumbotron-background">
-
 			<img src="resources/images/book4.jpg" class="blur ">
 		</div>
-		<div class="container text-white">
-			<h1 class="title text-yellow font-italic">EveryBook,</h1>
+		<div class="container text-white text-center">
+			<h1 class="title text-yellow font-italic">
+				<u>BOOK</u> ,book
+			</h1>
 			<br>
-			<p class="lead">This is a simple hero unit, a simple
-				jumbotron-style component for calling extra attention to featured
-				content or information.</p>
+			<p class="h3 text-yellow">중고책을 검색하고, 결과를 확인하세요!</p>
 			<!--<hr class="my-4">-->
-			<p>It uses utility classes for typography and spacing to space
-				content out within the larger container.</p>
-			<a class="btn btn-secondary btn-lg" href="#" role="button">Learn
-				more</a>
+			<em class="lead">You can search for any used book. And get the
+				results!</em>
+			<!-- Search box Starttttttttttttttttt-->
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-10 col-lg-8">
+
+					<div class="card-body row no-gutters align-items-center">
+
+						<div class="col">
+							<input
+								class="form-control form-control-lg form-control-borderless"
+								type="text" placeholder="검색어를 입력해보세요." name='keyword'
+								id="keywordInput" value='${cri.keyword}' />
+						</div>
+						<div class="col-auto">
+							&nbsp
+							<button class="btn btn-lg btn-warning" id="searchBtn">Search</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- search Box endddddd -->
 
 		</div>
 	</div>
 	<!-- /jumbotron -->
-	<!-- Search box -->
+
+	<h4 class="text-center">
+		<em>Welcome to the <u>Book</u>book
+		</em>
+	</h4>
+	<hr>
+
 	<div class="container">
-		<br />
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-10 col-lg-8">
-				<form class="card card-sm">
-					<div class="card-body row no-gutters align-items-center">
-						<div class="col-auto">
-							<i class="fas fa-search h4 text-body"></i>
-						</div>
-						<!--end of col-->
-						<div class="col">
-							<input
-								class="form-control form-control-lg form-control-borderless"
-								type="search" placeholder="Search topics or keywords">
-						</div>
-						<!--end of col-->
-						<div class="col-auto">
-							<button class="btn btn-lg btn-warning" type="submit">Search</button>
-						</div>
-						<!--end of col-->
-					</div>
-				</form>
+		<div class="row">
+			<!--FIND start -->
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book-default">
+					<p class="text-center book-font"></p>
+				</div>
 			</div>
-			<!--end of col-->
-		</div>
-	</div>
-	<!-- end of SearchBox -->
-	<!-- test -->
-	<div class="container-fluid"
-		style="background-color: #f4f2e9; border-radius: 15px; width: auto; height: 500px; margin-top: 20px; margin-left: 20px; margin-right: 20px;">
-		<table>
-			<br>
-			<hr class="happy">
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book fold">
+					<p class="text-center book-font">F</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">I</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">N</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">D</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book-default">
+					<p class="text-center book-font"></p>
+				</div>
+			</div>
 
-		</table>
+			<div class="col-12 shelf d-none d-lg-block d-xl-block"></div>
+			<!-- FIND end -->
+			<!--THE start -->
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book-default">
+					<p class="text-center book-font"></p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book-default">
+					<p class="text-center book-font"></p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book fold">
+					<p class="text-center book-font">T</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">H</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">E</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book-default">
+					<p class="text-center book-font"></p>
+				</div>
+			</div>
+			<div class="col-12 shelf d-none d-lg-block d-xl-block"></div>
+			<!-- THE end -->
+			<!--BOOK start -->
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book-default">
+					<p class="text-center book-font"></p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book fold">
+					<p class="text-center book-font">B</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">O</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">O</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book">
+					<p class="text-center book-font">K</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
+				<div class="book-default">
+					<p class="text-center book-font"></p>
+				</div>
+			</div>
+			<div class="col-12 shelf d-none d-lg-block d-xl-block"></div>
+			<!-- BOOK end -->
+		</div>
 
+		<!-- Footer Start -->
+		<%@include file="include/footer.jsp"%>
+		<!-- Footer End -->
 	</div>
-	<!-- end of test -->
-	<!-- Footer -->
-	<footer class="pt-4 my-md-5 pt-md-5 border-top">
-	<div class="row">
-		<div class="col-12 col-md">
-			<small class="d-block mb-3 text-muted">© 2017-2018</small>
-		</div>
-		<div class="col-6 col-md">
-			<h5>Features</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Cool stuff</a></li>
-				<li><a class="text-muted" href="#">Random feature</a></li>
-				<li><a class="text-muted" href="#">Team feature</a></li>
-				<li><a class="text-muted" href="#">Stuff for developers</a></li>
-				<li><a class="text-muted" href="#">Another one</a></li>
-				<li><a class="text-muted" href="#">Last time</a></li>
-			</ul>
-		</div>
-		<div class="col-6 col-md">
-			<h5>Resources</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Resource</a></li>
-				<li><a class="text-muted" href="#">Resource name</a></li>
-				<li><a class="text-muted" href="#">Another resource</a></li>
-				<li><a class="text-muted" href="#">Final resource</a></li>
-			</ul>
-		</div>
-		<div class="col-6 col-md">
-			<h5>About</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Team</a></li>
-				<li><a class="text-muted" href="#">Locations</a></li>
-				<li><a class="text-muted" href="#">Privacy</a></li>
-				<li><a class="text-muted" href="#">Terms</a></li>
-			</ul>
-		</div>
-	</div>
-	</footer>
-	<!-- Footer end-->
+	<!--  Container end -->
 	<!-- script -->
+	<script>
+		$(document).ready(
+				function() {
+					$('#searchBtn').on(
+							"click",
+							function(event) {
+								self.location = "/sboard/list"
+										+ '${pageMaker.makeQuery(1)}'
+										+ "&searchType=n" + "&keyword="
+										+ $('#keywordInput').val();
+							});
+					$('#newBtn').on("click", function(evt) {
+						self.location = "register";
+					});
+				});
+	</script>
 	<script type="text/javascript">
 		$('#collapsibleNavbar').collapse({
 			toggle : false
 		})
+		$(window).scroll(function() {
+			$('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
+		});
 	</script>
-
-	<!--
-For IE support of object-fit add this to your document
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/object-fit-images/3.2.4/ofi.min.js"&gt;&lt;/script&gt;
--->
 </body>
 
 </html>

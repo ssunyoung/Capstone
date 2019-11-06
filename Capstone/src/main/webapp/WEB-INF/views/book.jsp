@@ -4,55 +4,15 @@
 	pageEncoding="UTF-8"%>
 <%@include file="include/header.jsp"%>
 <%@include file="include/header_json.jsp"%>
+<%@ page import="java.util.ArrayList.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.net.URLEncoder"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <title>searchList Page</title>
 
 <style type="text/css">
-/*jumbotron*/
-.jumbotron {
-	position: relative;
-	overflow: hidden;
-}
-
-.jumbotron .container {
-	position: relative;
-	z-index: 2;
-	/*투명색 조절*/
-	background: rgba(0, 0, 0, 0.2);
-	padding: 2rem;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-radius: 3px;
-	margin-top: 40px;
-}
-
-.jumbotron-background {
-	object-fit: cover;
-	font-family: 'object-fit: cover;';
-	position: absolute;
-	top: 0;
-	z-index: 1;
-	width: 100%;
-	height: 100%;
-	opacity: 0.5;
-}
-
-img.blur {
-	-webkit-filter: blur(1px);
-	filter: blur(0px);
-	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='4');
-	width: 100%;
-	height: 100%;
-}
-
-.title {
-	font-size: 4.5rem;
-	font-weight: 400;
-	line-height: 1.2;
-}
-
-/*jumbotron end*/
 
 /*navbar start*/
 @media ( min-width : 768px) {
@@ -133,50 +93,85 @@ img.blur {
 	background: #f4f2e9;
 }
 
+/*search box css start here*/
+.search-sec {
+	padding: 2rem;
+}
+
+.search-slt {
+	display: block;
+	width: 100%;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: #55595c;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	height: calc(3rem + 2px) !important;
+	border-radius: 0;
+}
+
+.wrn-btn {
+	width: 100%;
+	font-size: 16px;
+	font-weight: 400;
+	text-transform: capitalize;
+	height: calc(3rem + 2px) !important;
+	border-radius: 0;
+	background-color: #f8bd3a;
+	border-color: #f8bd3a;
+}
+
+@media ( min-width : 992px) {
+	.search-sec {
+		position: relative;
+		top: -114px;
+		background: white;
+	}
+}
+
+@media ( max-width : 992px) {
+	.search-sec {
+		background: white;
+	}
+}
+
+<!--
+book img start-->.thumbnail_image {
+	position: relative;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.thumbnail_image::before {
+	content: "";
+	box-sizing: border-box;
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.2) 0px,
+		transparent 5%, transparent 95%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+.thumbnail {
+	max-height: 313px;
+}
+
+.thumbnail-border {
+	box-sizing: border-box;
+	opacity: 0.2;
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 3;
+	border: 1px solid #000;
+}
 </style>
 <body class="happy2">
 	<!-- nav -->
-	<div class="navbar-wrapper row">
-		<div class="container-fluid col">
-			<nav class="navbar navbar-expand-lg navbar-custom shadow p-3 mb-5 rounded"> <a
-				class="navbar-brand" href="#">LOGO</a> <!-- hamburger menu -->
-			<button class="navbar-toggler custom-toggler" type="button"
-				data-toggle="collapse" data-target="#collapsibleNavbar">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="collapsibleNavbar">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-				</ul>
-			</div>
-			</nav>
-		</div>
-	</div>
-	<!-- /nav -->
+	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
 
-	<!-- <!--jumbotron 
-	<div class="jumbotron jumbotron-fluid bg-dark">
-
-		<div class="jumbotron-background">
-			<img src="/resources/images/book4.jpg" class="blur ">
-		</div>
-		<div class="container text-white">
-			<h1 class="title text-yellow font-italic">EveryBook,</h1>
-			<br>
-			<p class="lead">This is a simple hero unit, a simple
-				jumbotron-style component for calling extra attention to featured
-				content or information.</p>
-			<hr class="my-4">
-			<p>It uses utility classes for typography and spacing to space
-				content out within the larger container.</p>
-			<a class="btn btn-secondary btn-lg" href="#" role="button">Learn
-				more</a>
-
-		</div>
-	</div>
-	/jumbotron -->
 	<br>
 	<br>
 	<br>
@@ -185,138 +180,154 @@ img.blur {
 	<br>
 	<!-- Search box -->
 	<div class="container">
-		<br />
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-10 col-lg-8">
-				<form class="card card-sm">
-					<div class="card-body row no-gutters align-items-center">
-						<div class="col-auto">
-							<i class="fas fa-search h4 text-body"></i>
-						</div>
-						<!--end of col-->
-						<div class="col">
-							<form action="/everybook/book" method="POST">
-								<input
-									class="form-control form-control-lg form-control-borderless"
-									type="search" placeholder="Search topics or keywords">
-								<!-- 								<a href="javascript:fn_searchList()" name="queryWord"
-									id="queryWord">Search</a> -->
-						</div>
-						<!--end of col-->
-						<div class="col-auto">
-							<button href="javascript:fn_searchList()"
-								class="btn btn-lg btn-warning" type="submit" name="queryWord"
-								id="queryWord">Search</button>
-						</div>
-				</form>
-
+		<br>
+		<form>
+			<div class="row shadow p-4 mb-4 bg-white ">
 				<!--end of col-->
+				<form action="/bookbook/book" method="POST">
+					<input class="form-control search-slt" type="text"
+						placeholder="책 이름  검색하시오." name='queryWord' id="keywordInput" />
+				</form>
+				<button id="searchBtn" class="btn btn-danger wrn-btn">Search</button>
 			</div>
-			</form>
-		</div>
+		</form>
 		<!--end of col-->
+
+		<!-- end of SearchBox -->
+		<!-- test -->
+		<div class="container"
+			style="background-color: #f4f2e9; border-radius: 15px; width: auto; height: auto; margin-top: 20px; margin-left: 20px; margin-right: 20px;">
+			<div class="container">
+				<center>
+					<c:if test="${empty queryWord}">
+						검색어를 입력해주세요.
+					</c:if>
+					<c:if test="${!empty queryWord}">
+						<h3>
+							<p class="font-red">
+								"<em>${queryWord}</em> " 검색 결과입니다.
+							</p>
+						</h3>
+						<hr>
+
+						<br>
+						<br>
+						<!-- aladin 결과  -->
+						<%
+							String keyword = (String) request.getAttribute("queryWord");
+
+								String url = (String) request.getAttribute("addResult");
+								if (url.equals("error") || url == "error") {
+									out.print(url + "<br>aladinApi에서 에러 발생 <br>사이트에서 확인하세요 하고 링크 달기.<br><br><br>");
+								} else {
+									ArrayList<String> test = (ArrayList<String>) request.getAttribute("aladinRest");
+
+									//out.print("***************************");
+									//out.print(url);
+									Object obj = JSONValue.parse(url);
+									JSONObject object = (JSONObject) obj;
+									JSONArray items = (JSONArray) object.get("item");
+
+									String result = items.toString();
+
+									out.print("<h2><em>[" + keyword + "]</em> 에 대한 알라딘 검색 결과 입니다.</h2>");
+									out.print("<span class='text-left'>중고 총 재고 개수: <b>" + object.get("totalResults") + "</b>권 </span>");
+									out.print(
+											"<a href='https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=Used&SearchWord="
+													+ URLEncoder.encode(keyword, "EUC-KR")
+													+ "&CategorySearch=&chkKeyTitle=on' /><p class='text-right text-black'>알라딘에서 더 많은 결과 보기</p></a><hr>");
+									out.print("<div class='row'>");
+									// 실제 리스트 뽑기 
+
+									for (int i = 0; i < items.size(); i++) {
+										if (items.size() == 0) {
+											out.print("<strong>검색결과가 존재하지 않습니다. <br> 다른 검색어를 입력해주세요.</strong>");
+											break;
+										}
+										out.print("<div class='col-lg-3 thumbnail_image'>");
+										JSONObject results = (JSONObject) items.get(i);
+
+										out.print("<a href=\'" + results.get("link") + "\'><img class='thumbnail' src=\""
+												+ results.get("cover") + "\"></img></a><span class='thumbnail-border'></span><br>");
+										out.print("<p class='card-title'><b>" + results.get("title") + "</b></p><br>");
+										//out.print("link : <b>" + results.get("link") + "</b><br>");
+										if (test.get(items.size() + i).equals("") || test.get(items.size() + i).equals("-")
+												|| test.get(i).equals("") || test.get(i).equals("-")) {
+											out.print("사이트에서 가격정보를 확인하세요.");
+											continue;
+										} else {
+											out.print("<del>" + results.get("priceStandard") + "</del> <b>" + test.get(items.size() + i)
+													+ "원</b><br>");
+											out.print("총 재고 : <b>" + test.get(i) + "권</b><br>");
+										}
+										//out.print("salePrice : <b>" + test.get(items.size() + i) + "</b><br>");
+										//out.print(results.get("stockStatus") instanceof String);
+										int range = 0;
+										Object objj = "";
+
+										if (results.get("stockStatus").equals(null) && results.get("stockStatus").equals(objj)) {
+											out.print("stockStatus : <b>이상무</b><br>");
+										} else {
+											out.print("stockStatus  : <b>" + results.get("stockStatus") + "123</b><br>");
+										}
+										out.print(results.get("publisher") + "<br>");
+										out.print("</div>");
+									} // for end
+									out.print("</div>");
+								} //else end
+						%>
+						<hr>
+						<!-- YES24 결과 -->
+						<%
+							out.print("<h2><em>[" + keyword + "]</em> 에 대한 YES24 검색 결과 입니다.</h2>");
+								String aa = (String) request.getAttribute("hash");
+								Object obj2 = JSONValue.parse(aa);
+								JSONObject object2 = (JSONObject) obj2;
+								JSONArray res2 = (JSONArray) object2.get("res");
+								String result2 = res2.toString();
+								/*								out.print("<span class='text-left'>중고 총 재고 개수: <b>" + object.get("totalResults") + "</b>권 </span>");
+								 */ out.print(
+										"<a href='http://www.yes24.com/searchcorner/Search?keywordAd=&keyword=&domain=USED_GOODS&qdomain=UsedGoods&query="
+												+ URLEncoder.encode(keyword, "EUC-KR")
+												+ "/' /><p class='text-right text-black'>YES24에서 더 많은 결과 보기</p></a><hr>");
+
+								out.print("<div class='row'>");
+								for (int i = 0; i < res2.size(); i++) {
+									out.print("<div class='col-lg-3 thumbnail_image'>");
+
+									JSONObject results2 = (JSONObject) res2.get(i);
+									out.print("<a href=\'" + results2.get("link") + "\'><img class='thumbnail' src=\""
+											+ results2.get("CoverImg") + "\"></img></a><span class='thumbnail-border'></span><br>");
+									out.print("<b>" + results2.get("title") + "</b><br>");
+									out.print("<del>" + results2.get("OrgPrice") + "</del> <b>" + results2.get("Sale") + "</b><br>");
+									out.print("총 재고 : <b>" + results2.get("stockNum") + "권</b><br>");
+									out.print("</div>");
+								}
+								out.print("</div>");
+						%>
+					</c:if>
+
+				</center>
+			</div>
+		</div>
+
+		<!-- end of test -->
+
+
+		<!-- Footer -->
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
+		<!-- Footer end-->
 	</div>
-	</div>
-	<!-- end of SearchBox -->
-	<!-- test -->
-	<div class="container-fluid"
-		style="background-color: #f4f2e9; border-radius: 15px; width: auto; height: auto; margin-top: 20px; margin-left: 20px; margin-right: 20px;">
-		<div class="container">
-			<center>
-<!-- 				<h1>11221</h1> -->
-				<h3>"c언어 익스프레스" 로 검색한 결과입니다.</h3>
-				<br> <br>
-				<%
-					String url = (String) request.getAttribute("addResult");
-					//out.print("***************************");
-					//out.print(url);
-					Object obj = JSONValue.parse(url);
-					JSONObject object = (JSONObject) obj;
-					JSONArray items = (JSONArray) object.get("item");
-					String result = items.toString();
-
-					for (int i = 0; i < items.size(); i++) {
-						out.print((i + 1) + "번째=>");
-						JSONObject results = (JSONObject) items.get(i);
-						out.print("title : <b>" + results.get("title") + "</b><br>");
-						out.print("link : <b>" + results.get("link") + "</b><br>");
-						out.print("priceSales : <b>" + results.get("priceSales") + "</b><br>");
-						out.print("cover : <b>" + results.get("cover") + "</b><br>");
-						//out.print(results.get("stockStatus") instanceof String);
-						int range = 0;
-						Object objj = "";
-
-						out.print("aaaa" + objj);
-						if (results.get("stockStatus").equals(null) && results.get("stockStatus").equals(objj)) {
-							out.print("stockStatus : <b>이상무</b><br>");
-						} else {
-							out.print("stockStatus  : <b>" + results.get("stockStatus") + "123</b><br>");
-						}
-						out.print("publisher : <b>" + results.get("publisher") + "</b><br><hr>");
-
-					}
-				%>
-			
-		</div>
-
-	</div>
-	<!-- end of test -->
 
 
-	<!-- Footer -->
-	<footer class="pt-4 my-md-5 pt-md-5 border-top">
-	<div class="row">
-		<div class="col-12 col-md">
-			<small class="d-block mb-3 text-muted">© 2017-2018</small>
-		</div>
-		<div class="col-6 col-md">
-			<h5>Features</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Cool stuff</a></li>
-				<li><a class="text-muted" href="#">Random feature</a></li>
-				<li><a class="text-muted" href="#">Team feature</a></li>
-				<li><a class="text-muted" href="#">Stuff for developers</a></li>
-				<li><a class="text-muted" href="#">Another one</a></li>
-				<li><a class="text-muted" href="#">Last time</a></li>
-			</ul>
-		</div>
-		<div class="col-6 col-md">
-			<h5>Resources</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Resource</a></li>
-				<li><a class="text-muted" href="#">Resource name</a></li>
-				<li><a class="text-muted" href="#">Another resource</a></li>
-				<li><a class="text-muted" href="#">Final resource</a></li>
-			</ul>
-		</div>
-		<div class="col-6 col-md">
-			<h5>About</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Team</a></li>
-				<li><a class="text-muted" href="#">Locations</a></li>
-				<li><a class="text-muted" href="#">Privacy</a></li>
-				<li><a class="text-muted" href="#">Terms</a></li>
-			</ul>
-		</div>
-	</div>
-	</footer>
-	<!-- Footer end-->
+
 	<!-- script -->
 	<script type="text/javascript">
 		$('#collapsibleNavbar').collapse({
 			toggle : false
 		})
 	</script>
-	<script type="text/javascript">
-		function fn_searchList() {
-			var queryWord = $("#queryWord").val();
-		}
-	</script>
 
-	<!--
-For IE support of object-fit add this to your document
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/object-fit-images/3.2.4/ofi.min.js"&gt;&lt;/script&gt;
--->
 </body>
 
 </html>

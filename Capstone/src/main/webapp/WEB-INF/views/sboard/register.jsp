@@ -136,28 +136,54 @@ img.blur {
 .main-custom {
 	backgournd-color: lightyellow !important;
 }
+
+/*search box css start here*/
+.search-sec {
+	padding: 2rem;
+}
+
+.search-slt {
+	display: block;
+	width: 100%;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: #55595c;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	height: calc(3rem + 2px) !important;
+	border-radius: 0;
+}
+
+.wrn-btn {
+	width: 100%;
+	font-size: 16px;
+	font-weight: 400;
+	text-transform: capitalize;
+	height: calc(3rem + 2px) !important;
+	border-radius: 0;
+	background-color: #f8bd3a;
+	border-color: #f8bd3a;
+}
+
+@media ( min-width : 992px) {
+	.search-sec {
+		position: relative;
+		top: -114px;
+		background: white;
+	}
+}
+
+@media ( max-width : 992px) {
+	.search-sec {
+		background: white;
+	}
+}
 </style>
 <body class="happy2">
 	<!-- nav -->
-	<div class="navbar-wrapper row">
-		<div class="container-fluid col">
-			<nav
-				class="navbar navbar-expand-lg navbar-custom shadow p-3 mb-5 rounded">
-			<a class="navbar-brand" href="#">LOGO</a> <!-- hamburger menu -->
-			<button class="navbar-toggler custom-toggler" type="button"
-				data-toggle="collapse" data-target="#collapsibleNavbar">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="collapsibleNavbar">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-				</ul>
-			</div>
-			</nav>
-		</div>
-	</div>
+	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
+
 	<!-- /nav -->
 
 	<br>
@@ -166,73 +192,42 @@ img.blur {
 	<br>
 	<br>
 	<br>
-	<!-- Search box -->
-	<div class="container">
-		<br>
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-10 col-lg-8">
-				<form class="card card-sm">
-					<div class="card-body row no-gutters align-items-center">
-						<div class="col-auto">
-							<i class="fas fa-search h4 text-body"></i>
-						</div>
-						<!--end of col-->
-						<div class="col">
-							<form action="/everybook/book" method="POST">
-								<input
-									class="form-control form-control-lg form-control-borderless"
-									type="search" placeholder="Search topics or keywords">
-								<!-- 								<a href="javascript:fn_searchList()" name="queryWord"
-									id="queryWord">Search</a> -->
-						</div>
-						<!--end of col-->
-						<div class="col-auto">
-							<button href="javascript:fn_searchList()"
-								class="btn btn-lg btn-warning" type="submit" name="queryWord"
-								id="queryWord">Search</button>
-						</div>
-				</form>
-				<!--end of col-->
-			</div>
-		</div>
-		<!--end of col-->
-	</div>
-	<!-- end of SearchBox -->
-
-	<!-- board Register Form -->
 	<div class="container main-custom">
+
+		<div class="btn btn-secondary wrn-btn">
+			<a onclick="openChild()">온라인검색결과가져오기</a>
+		</div>
+		<br><br>
+		
+
+		<!-- board Register Form -->
 		<form role="form" method="post">
 			<div class="box-body">
-				<div class="md-form">
-					<i class="fas fa-pencil-alt prefix"></i>
-					<input type="text" id="form10" class="md-textarea form-control" />
-					<label for="form10">Icon Prefix</label>
-				</div>
 				<div class="form-group">
 					<label for="Title">Title</label> <input type="text" name="title"
-						class="form-control" placeholder="Enter BOOK Title">
+						class="form-control" id="title" placeholder="Enter BOOK Title">
 				</div>
 				<div class="form-group">
 					<label for="Writer">Writer</label> <input type="text" name="writer"
-						class="form-control" placeholder="Enter Writer">
+						id="writer" class="form-control" placeholder="Enter Writer">
 				</div>
 				<div class="form-group">
 					<label for="publisher">publisher</label> <input type="text"
-						name="publisher" class="form-control"
+						name="publisher" id="publisher" class="form-control"
 						placeholder="Enter publisher">
 				</div>
 				<div class="form-group">
 					<label for="pubdate">pubdate</label> <input type="text"
-						name="pubdate" class="form-control"
+						name="pubdate" id="pubdate" class="form-control"
 						placeholder="Enter publishing date">
 				</div>
 				<div class="form-group">
 					<label for="isbn">isbn</label> <input type="text" name="isbn"
-						class="form-control" placeholder="Enter isbn number">
+						class="form-control" id="isbn" placeholder="Enter isbn number">
 				</div>
 				<div class="form-group">
 					<label for="org_price">org_price</label> <input type="text"
-						name="org_price" class="form-control"
+						id="price" name="org_price" class="form-control"
 						placeholder="Enter Original price">
 				</div>
 				<div class="form-group">
@@ -308,12 +303,17 @@ img.blur {
 		$('#collapsibleNavbar').collapse({
 			toggle : false
 		})
-	</script>
-	<script type="text/javascript">
-		function fn_searchList() {
-			var queryWord = $("#queryWord").val();
+
+		var openWin;
+
+		function openChild() {
+			window.name = "parentForm";
+			openWin = window.open("http://localhost:8080/sboard/naverSearch",
+					"childForm",
+					"width=800, height=600, resizable=no, location=no")
 		}
 	</script>
+
 </body>
 
 </html>
