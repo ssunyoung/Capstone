@@ -6,7 +6,7 @@
 <%@include file="include/header.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>mainPage</title>
+<title>북-북</title>
 <link href="resources/css/book.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
@@ -149,11 +149,11 @@ body {
 
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="/sboard/list">북-북
-						게시판</a></li>
-				<li class="nav-item"><a class="nav-link" href="/bookbook/book">마이
-						북-북</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+				<li class="nav-item"><a class="nav-link" href="/sboard/list">중고장터</a></li>
+				<li class="nav-item"><a class="nav-link" href="/bookbook/book">북북
+						비교검색</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/bookbook/library">도서관 검색</a></li>
 			</ul>
 		</div>
 		</nav>
@@ -205,12 +205,17 @@ body {
 	</h4>
 	<hr>
 
+
+
 	<div class="container">
 		<div class="row">
 			<!--FIND start -->
 			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
 				<div class="book-default">
-					<p class="text-center book-font"></p>
+					<p class="text-center book-font">
+		
+					</p>
+					
 				</div>
 			</div>
 			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
@@ -235,7 +240,12 @@ body {
 			</div>
 			<div class="col-md-3 col-lg-2 d-none d-xs-none d-sm-none d-lg-block">
 				<div class="book-default">
-					<p class="text-center book-font"></p>
+								<h6 class="text-center">
+						<br><br><br>
+						<em>이용이 <br>처음이신가요?</em>
+						<br><br>
+						<a href="/bookbook/help">도움말 보러가기</a>
+					</h6>
 				</div>
 			</div>
 
@@ -324,7 +334,7 @@ body {
 								self.location = "/sboard/list"
 										+ '${pageMaker.makeQuery(1)}'
 										+ "&searchType=n" + "&keyword="
-										+ $('#keywordInput').val();
+										+ encodeURI($('#keywordInput').val());
 							});
 					$('#newBtn').on("click", function(evt) {
 						self.location = "register";

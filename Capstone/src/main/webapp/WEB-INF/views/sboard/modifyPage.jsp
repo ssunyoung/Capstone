@@ -7,7 +7,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>board Each MODIFY</title>
+<title>중고장터</title>
 
 <style type="text/css">
 
@@ -186,11 +186,12 @@
 			</div>
 		</div>
 		<!-- end of board Register Form -->
-	</div>
-	<!-- Footer -->
-	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 
-	<!-- Footer end-->
+		<!-- Footer -->
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
+
+		<!-- Footer end-->
+	</div>
 	<!-- script -->
 	<script type="text/javascript">
 		$('#collapsibleNavbar').collapse({

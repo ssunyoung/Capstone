@@ -6,4 +6,5 @@
 		<package name="com.ssun.everybook.domain"></package>
 	</typeAliases>
 
+
 </configuration>

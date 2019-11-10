@@ -8,7 +8,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>board List Page + searching</title>
+<title>중고장터</title>
 
 <style type="text/css">
 /*jumbotron*/
@@ -214,8 +214,8 @@ body {
 			<th>phone</th>
 			<th>contraction</th> -->
 						<th>regDate</th>
-						<th>viewcnt</th>
-					</tr>
+<!-- 						<th>viewcnt</th>
+ -->					</tr>
 				</thead>
 				<c:forEach items="${list}" var="boardVO">
 					<tr>
@@ -238,7 +238,7 @@ body {
 				<td>${boardVO.contraction}</td> --%>
 						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 								value="${boardVO.regDate}" /></td>
-						<td><span class="badge bg-red">${boardVO.viewcnt}</span></td>
+						<%-- <td><span class="badge bg-red">${boardVO.viewcnt}</span></td> --%>
 					</tr>
 				</c:forEach>
 			</table>
@@ -294,7 +294,7 @@ body {
 										+ "&searchType="
 										+ $("select option:selected").val()
 										+ "&keyword="
-										+ $('#keywordInput').val();
+										+ encodeURI($('#keywordInput').val());
 							});
 					$('#newBtn').on("click", function(evt) {
 						self.location = "register";

@@ -56,7 +56,7 @@ public class BoardController {
 	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
 	public void listPage(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 	
-		logger.info(cri.toString()+"      boardcontroller cri.toString()  result");
+		logger.info(cri.toString()+" boardcontroller cri.toString() result");
 
 		model.addAttribute("list", service.listCriteria(cri));
 		PageMaker pageMaker = new PageMaker();

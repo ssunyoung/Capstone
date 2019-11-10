@@ -7,7 +7,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>board Register Form</title>
+<title>중고장터</title>
 
 <style type="text/css">
 /*jumbotron*/
@@ -197,8 +197,9 @@ img.blur {
 		<div class="btn btn-secondary wrn-btn">
 			<a onclick="openChild()">온라인검색결과가져오기</a>
 		</div>
-		<br><br>
-		
+		<br>
+		<br>
+
 
 		<!-- board Register Form -->
 		<form role="form" method="post">
@@ -258,52 +259,15 @@ img.blur {
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</div>
 		</form>
+		<!-- end of board Register Form -->
+		<!-- Footer -->
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
+
+		<!-- Footer end-->
 	</div>
-	<!-- end of board Register Form -->
-	<!-- Footer -->
-	<footer class="pt-4 my-md-5 pt-md-5 border-top">
-	<div class="row">
-		<div class="col-12 col-md">
-			<small class="d-block mb-3 text-muted">© 2017-2018</small>
-		</div>
-		<div class="col-6 col-md">
-			<h5>Features</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Cool stuff</a></li>
-				<li><a class="text-muted" href="#">Random feature</a></li>
-				<li><a class="text-muted" href="#">Team feature</a></li>
-				<li><a class="text-muted" href="#">Stuff for developers</a></li>
-				<li><a class="text-muted" href="#">Another one</a></li>
-				<li><a class="text-muted" href="#">Last time</a></li>
-			</ul>
-		</div>
-		<div class="col-6 col-md">
-			<h5>Resources</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Resource</a></li>
-				<li><a class="text-muted" href="#">Resource name</a></li>
-				<li><a class="text-muted" href="#">Another resource</a></li>
-				<li><a class="text-muted" href="#">Final resource</a></li>
-			</ul>
-		</div>
-		<div class="col-6 col-md">
-			<h5>About</h5>
-			<ul class="list-unstyled text-small">
-				<li><a class="text-muted" href="#">Team</a></li>
-				<li><a class="text-muted" href="#">Locations</a></li>
-				<li><a class="text-muted" href="#">Privacy</a></li>
-				<li><a class="text-muted" href="#">Terms</a></li>
-			</ul>
-		</div>
-	</div>
-	</footer>
-	<!-- Footer end-->
+
 	<!-- script -->
 	<script type="text/javascript">
-		$('#collapsibleNavbar').collapse({
-			toggle : false
-		})
-
 		var openWin;
 
 		function openChild() {

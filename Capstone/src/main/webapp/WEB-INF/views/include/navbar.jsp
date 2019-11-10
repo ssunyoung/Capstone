@@ -12,11 +12,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="/sboard/list">북-북
-							게시판</a></li>
+					<li class="nav-item"><a class="nav-link" href="/sboard/list">중고장터</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/bookbook/book">마이 북-북</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+						href="/bookbook/book">북북 비교검색</a></li>
+					<li class="nav-item"><a class="nav-link" href="/bookbook/library">도서관 검색</a></li>
 				</ul>
 			</div>
 			</nav>

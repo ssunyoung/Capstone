@@ -134,6 +134,7 @@ img.blur {
 	background: #f4f2e9;
 }
 </style>
+
 <body class="happy2">
 	<!-- nav -->
 	<div class="navbar-wrapper row">

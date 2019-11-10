@@ -1,18 +1,19 @@
+<%@page
+	import="org.springframework.web.bind.annotation.SessionAttributes"%>
+<%@page import="com.mysql.cj.Session"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/views/include/header.jsp"%>
-<%@include file="/WEB-INF/views/include/header_json.jsp"%>
+<%@include file="include/header.jsp"%>
+<%@include file="include/header_json.jsp"%>
 <%@ page import="java.util.ArrayList.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.URLEncoder"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Naver Searching</title>
+<title>도서관 검색</title>
 
 <style type="text/css">
 
@@ -138,8 +139,8 @@
 	}
 }
 
-/* book img start */
-.thumbnail_image {
+<!--
+book img start-->.thumbnail_image {
 	position: relative;
 	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
 }
@@ -170,9 +171,7 @@
 	border: 1px solid #000;
 }
 </style>
-</head>
 <body class="happy2">
-
 	<!-- nav -->
 	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
 
@@ -182,83 +181,105 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<h1>naver search page</h1>
+	<!-- Search box -->
 	<div class="container">
-		<!-- Search box -->
+		<%
+			request.setCharacterEncoding("UTF-8");
+			String isbn = request.getParameter("isbn");
+		%>
+		<br>
 		<form>
 			<div class="row shadow p-4 mb-4 bg-white ">
 				<!--end of col-->
-				<form action="/sboard/naverSearch" method="GET">
-					<input class="form-control search-slt" type="text"
-						placeholder="책 이름  검색하시오." name='naverQuery' id="" />
+				<form action="/bookbook/library" method="GET">
+					<div class="col-lg-6">
+						지역 : <input class="form-control search-slt" type="text"
+							placeholder="ex)경기도" name='region' />
+					</div>
+					<div class="col-lg-6">
+
+						상세지역 : <input class="form-control search-slt" type="text"
+							placeholder="ex)수정구" name='region2' />
+					</div>
+					<div class="col-lg-12">
+						ISBN :<%
+						if (isbn != null) {
+					%>
+						<input class="form-control" type="text" name="isbn"
+							value="<%=isbn%>" />
+						<%
+							} else {
+						%>
+						<input class="form-control" placeholder="ISBN입력하세요." type="text"
+							name="isbn" />
+						<%
+							}
+						%>
+					</div>
+					<br><br>
 				</form>
 				<button id="searchBtn" class="btn btn-danger wrn-btn">Search</button>
 			</div>
 		</form>
+		<!--end of col-->
+
+
 		<!-- end of SearchBox -->
+		<c:if test="${empty regions}">
+			검색어를 입력해주세요.
+		</c:if>
+		<c:if test="${!empty regions}">
 
-		<!-- Naver Searching Part -->
-		<table border="1" bgcolor="pink">
-			<tr>
-				<td colspan="7" bgcolor="pink"></td>
-			</tr>
+			<table class="table table-striped table-bordered table-hover">
 
-			<c:forEach items="${naverRes}" var="b">
-				<tr>
-					<td rowspan="2"><img src="${b.image}"
-						></td>
-					<td rowspan="4" width="800"><input value="${b.title }"
-						id="title" /></td>
-					<td width="200"><input value="${b.author}" id="writer" /></td>
-				</tr>
-				<tr>
-					<td width="200"><input value="${b.price }" id="price" /></td>
-					<td width="200">${b.discount }</td>
-					<td width="200"><input value="${b.publisher }" id="publisher" /></td>
-					<td width="200"><input value="${b.pubdate }" id="pubdate" /></td>
-					<td width="200"><input value="${b.isbn }" id="isbn" /></td>
-				</tr>
+				<c:forEach items="${regions}" var="libVO">
+					<tr>
+						<td>${libVO.libName}</td>
+						<td>${libVO.libAddr}</td>
+						<td>${libVO.libCode}</td>
+						<td>
+							<form role="form">
+								<input type="hidden" name="region"
+									value=<%=request.getParameter("region")%> /> <input
+									type="hidden" name="region2"
+									value=<%=request.getParameter("region2")%> /> <input
+									type="hidden" name="isbn"
+									value=<%=request.getParameter("isbn")%> />
 
-				<tr>
+								<button type="submit" id="code" class='btn btn-warning'
+									name="code" value='${libVO.libCode}'>소장여부확인</button>
 
-					<td colspan="7">${b.description}<input type="button"
-						value="전달하기" onclick="setParentText(); window.close(); alert('자동완성 처리완료 나머지 정보를 입력해주세요.')" />
-					</td>
-				</tr>
-				<tr>
-					<td colspan="7" width="100%" bgcolor="pink"></td>
+								<c:if test="${reCode eq libVO.libCode}">
+									<p>${libVO.libName}에
+										<b> ${checking} </b>
+									</p>
+								</c:if>
+							</form>
+						</td>
 
-				</tr>
 
-			</c:forEach>
-		</table>
-		<!-- End of Naver Searching Part -->
+					</tr>
+				</c:forEach>
+				<td></td>
+			</table>
+		</c:if>
 
-		<!--  conatiner end -->
+
+		<!-- Footer -->
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
+		<!-- Footer end-->
 	</div>
 
-
+	
 	<!-- script -->
-	<script type="text/javascript">
-		$('#collapsibleNavbar').collapse({
-			toggle : false
+	<script type=text/javascript>
+		var formObj = $("form[role='form']");
+		$("#check").on("click", function() {
+			formObj.attr("action", "/bookbook/library");
+			formObj.attr("method", "get");
+			formObj.submit();
 		})
-
-		function setParentText() {
-			opener.document.getElementById("title").value = document
-					.getElementById("title").value;
-			opener.document.getElementById("writer").value = document
-					.getElementById("writer").value;
-			opener.document.getElementById("publisher").value = document
-					.getElementById("publisher").value;
-			opener.document.getElementById("pubdate").value = document
-					.getElementById("pubdate").value;
-			opener.document.getElementById("price").value = document
-					.getElementById("price").value;
-			opener.document.getElementById("isbn").value = document
-					.getElementById("isbn").value;
-
-		}
 	</script>
+</body>
+
 </html>

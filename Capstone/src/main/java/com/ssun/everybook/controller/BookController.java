@@ -49,6 +49,9 @@ public class BookController {
 			request.setAttribute("addResult", aladinMain);
 			request.setAttribute("aladinRest", aladinRest);
 		}
+		if ("".equals(aa)) {
+			System.out.println("$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		}
 		System.out.println("================aladin=====CONTROLLER START========\n");
 		System.out.println(aladinMain.contains("error"));
 		System.out.println("================aladin======CONTROLLER END========\n");

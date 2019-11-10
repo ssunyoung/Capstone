@@ -10,7 +10,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>searchList Page</title>
+<title>북북 비교검색</title>
 
 <style type="text/css">
 
@@ -168,6 +168,7 @@ book img start-->.thumbnail_image {
 	border: 1px solid #000;
 }
 </style>
+
 <body class="happy2">
 	<!-- nav -->
 	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
@@ -178,13 +179,15 @@ book img start-->.thumbnail_image {
 	<br>
 	<br>
 	<br>
+
+
 	<!-- Search box -->
 	<div class="container">
 		<br>
 		<form>
 			<div class="row shadow p-4 mb-4 bg-white ">
 				<!--end of col-->
-				<form action="/bookbook/book" method="POST">
+				<form action="/bookbook/book" method="GET">
 					<input class="form-control search-slt" type="text"
 						placeholder="책 이름  검색하시오." name='queryWord' id="keywordInput" />
 				</form>
@@ -212,6 +215,7 @@ book img start-->.thumbnail_image {
 
 						<br>
 						<br>
+
 						<!-- aladin 결과  -->
 						<%
 							String keyword = (String) request.getAttribute("queryWord");
@@ -247,9 +251,12 @@ book img start-->.thumbnail_image {
 										out.print("<div class='col-lg-3 thumbnail_image'>");
 										JSONObject results = (JSONObject) items.get(i);
 
-										out.print("<a href=\'" + results.get("link") + "\'><img class='thumbnail' src=\""
-												+ results.get("cover") + "\"></img></a><span class='thumbnail-border'></span><br>");
+										out.print("<a href=\'" + results.get("link")
+												+ "\' target='_blank'><img class='thumbnail' src=\"" + results.get("cover")
+												+ "\"></img></a><span class='thumbnail-border'></span><br>");
 										out.print("<p class='card-title'><b>" + results.get("title") + "</b></p><br>");
+										out.print("<button type='submit' class='btn btn-warning' id='testBtn' onclick=\"location.href='http://localhost:8080/bookbook/library?isbn="+results.get("isbn13")+"'\">도서관 검색</button>");
+										out.print("<p>"+results.get("isbn13")+"</p>");
 										//out.print("link : <b>" + results.get("link") + "</b><br>");
 										if (test.get(items.size() + i).equals("") || test.get(items.size() + i).equals("-")
 												|| test.get(i).equals("") || test.get(i).equals("-")) {
@@ -296,7 +303,7 @@ book img start-->.thumbnail_image {
 									out.print("<div class='col-lg-3 thumbnail_image'>");
 
 									JSONObject results2 = (JSONObject) res2.get(i);
-									out.print("<a href=\'" + results2.get("link") + "\'><img class='thumbnail' src=\""
+									out.print("<a href=\'" + results2.get("link") + "\' target='_blank'><img class='thumbnail' src=\""
 											+ results2.get("CoverImg") + "\"></img></a><span class='thumbnail-border'></span><br>");
 									out.print("<b>" + results2.get("title") + "</b><br>");
 									out.print("<del>" + results2.get("OrgPrice") + "</del> <b>" + results2.get("Sale") + "</b><br>");
@@ -306,7 +313,7 @@ book img start-->.thumbnail_image {
 								out.print("</div>");
 						%>
 					</c:if>
-
+					
 				</center>
 			</div>
 		</div>
@@ -323,9 +330,7 @@ book img start-->.thumbnail_image {
 
 	<!-- script -->
 	<script type="text/javascript">
-		$('#collapsibleNavbar').collapse({
-			toggle : false
-		})
+	
 	</script>
 
 </body>
