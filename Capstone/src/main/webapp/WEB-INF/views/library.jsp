@@ -85,13 +85,6 @@
 }
 
 /*navbar end*/
-.happy {
-	color: saddlebrown;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
 .happy2 {
 	background: #f4f2e9;
 }
@@ -138,38 +131,6 @@
 		background: white;
 	}
 }
-
-<!--
-book img start-->.thumbnail_image {
-	position: relative;
-	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.thumbnail_image::before {
-	content: "";
-	box-sizing: border-box;
-	display: block;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	background: linear-gradient(to right, rgba(0, 0, 0, 0.2) 0px,
-		transparent 5%, transparent 95%, rgba(0, 0, 0, 0.2) 100%);
-}
-
-.thumbnail {
-	max-height: 313px;
-}
-
-.thumbnail-border {
-	box-sizing: border-box;
-	opacity: 0.2;
-	display: block;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	z-index: 3;
-	border: 1px solid #000;
-}
 </style>
 <body class="happy2">
 	<!-- nav -->
@@ -194,29 +155,30 @@ book img start-->.thumbnail_image {
 				<form action="/bookbook/library" method="GET">
 					<div class="col-lg-6">
 						지역 : <input class="form-control search-slt" type="text"
-							placeholder="ex)경기도" name='region' />
+							placeholder="ex)서울시" name='region' required />
 					</div>
 					<div class="col-lg-6">
 
 						상세지역 : <input class="form-control search-slt" type="text"
-							placeholder="ex)수정구" name='region2' />
+							placeholder="ex)성북구" name='region2' required /> <br>
 					</div>
 					<div class="col-lg-12">
 						ISBN :<%
 						if (isbn != null) {
 					%>
 						<input class="form-control" type="text" name="isbn"
-							value="<%=isbn%>" />
+							value="<%=isbn%>" readonly="readonly" required/>
 						<%
 							} else {
 						%>
 						<input class="form-control" placeholder="ISBN입력하세요." type="text"
-							name="isbn" />
+							name="isbn" required/>
 						<%
 							}
 						%>
+						<br>
 					</div>
-					<br><br>
+					<br> <br>
 				</form>
 				<button id="searchBtn" class="btn btn-danger wrn-btn">Search</button>
 			</div>
@@ -226,7 +188,8 @@ book img start-->.thumbnail_image {
 
 		<!-- end of SearchBox -->
 		<c:if test="${empty regions}">
-			검색어를 입력해주세요.
+			도서관 정보가 없습니다.<br>
+			검색어를 다시 입력해주세요.
 		</c:if>
 		<c:if test="${!empty regions}">
 
@@ -251,16 +214,13 @@ book img start-->.thumbnail_image {
 
 								<c:if test="${reCode eq libVO.libCode}">
 									<p>${libVO.libName}에
-										<b> ${checking} </b>
+										<b id="scroll"> ${checking} </b>
 									</p>
 								</c:if>
 							</form>
 						</td>
-
-
 					</tr>
 				</c:forEach>
-				<td></td>
 			</table>
 		</c:if>
 
@@ -270,15 +230,23 @@ book img start-->.thumbnail_image {
 		<!-- Footer end-->
 	</div>
 
-	
+
 	<!-- script -->
 	<script type=text/javascript>
 		var formObj = $("form[role='form']");
+		var tempScroll;
 		$("#check").on("click", function() {
+			tempScroll = $(window).scrollTop();
 			formObj.attr("action", "/bookbook/library");
 			formObj.attr("method", "get");
 			formObj.submit();
+
 		})
+		$(document).ready(function() {
+			$('html, body').animate({
+				scrollTop : $('#scroll').offset().top-70
+			}, 'slow');
+		});
 	</script>
 </body>
 

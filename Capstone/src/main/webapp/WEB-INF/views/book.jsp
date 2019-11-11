@@ -167,9 +167,15 @@ book img start-->.thumbnail_image {
 	z-index: 3;
 	border: 1px solid #000;
 }
+
+body {
+	background-color: #f4f2e9;
+	background-image:
+		url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
 </style>
 
-<body class="happy2">
+<body>
 	<!-- nav -->
 	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
 
@@ -184,13 +190,12 @@ book img start-->.thumbnail_image {
 	<!-- Search box -->
 	<div class="container">
 		<br>
-		<form>
-			<div class="row shadow p-4 mb-4 bg-white ">
+		<form action="/bookbook/book" method="GET">
+			<div class="row shadow p-4 mb-4 bg-white">
 				<!--end of col-->
-				<form action="/bookbook/book" method="GET">
-					<input class="form-control search-slt" type="text"
-						placeholder="책 이름  검색하시오." name='queryWord' id="keywordInput" />
-				</form>
+				<input class="form-control search-slt" type="text"
+					placeholder="책 이름  검색하시오." name='queryWord' id="keywordInput"
+					required />
 				<button id="searchBtn" class="btn btn-danger wrn-btn">Search</button>
 			</div>
 		</form>
@@ -199,7 +204,7 @@ book img start-->.thumbnail_image {
 		<!-- end of SearchBox -->
 		<!-- test -->
 		<div class="container"
-			style="background-color: #f4f2e9; border-radius: 15px; width: auto; height: auto; margin-top: 20px; margin-left: 20px; margin-right: 20px;">
+			style="width: auto; height: auto; margin-top: 20px; margin-left: 20px; margin-right: 20px;">
 			<div class="container">
 				<center>
 					<c:if test="${empty queryWord}">
@@ -222,7 +227,10 @@ book img start-->.thumbnail_image {
 
 								String url = (String) request.getAttribute("addResult");
 								if (url.equals("error") || url == "error") {
-									out.print(url + "<br>aladinApi에서 에러 발생 <br>사이트에서 확인하세요 하고 링크 달기.<br><br><br>");
+									out.print(url
+											+ "<br>aladin Api에서 알 수없는 오류가 발생했습니다. <br> <a href= 'https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=Used&SearchWord="
+											+ URLEncoder.encode(keyword, "EUC-KR")
+											+ "&CategorySearch=&chkKeyTitle=on' >알라딘 사이트에서 확인하세요.</a> <br> <br><br>");
 								} else {
 									ArrayList<String> test = (ArrayList<String>) request.getAttribute("aladinRest");
 
@@ -234,13 +242,14 @@ book img start-->.thumbnail_image {
 
 									String result = items.toString();
 
-									out.print("<h2><em>[" + keyword + "]</em> 에 대한 알라딘 검색 결과 입니다.</h2>");
+									out.print("<h2 class='color-red'>\"" + keyword + "\" 에 대한 알라딘 검색 결과 입니다.</h2>");
 									out.print("<span class='text-left'>중고 총 재고 개수: <b>" + object.get("totalResults") + "</b>권 </span>");
 									out.print(
 											"<a href='https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=Used&SearchWord="
 													+ URLEncoder.encode(keyword, "EUC-KR")
-													+ "&CategorySearch=&chkKeyTitle=on' /><p class='text-right text-black'>알라딘에서 더 많은 결과 보기</p></a><hr>");
-									out.print("<div class='row'>");
+													+ "&CategorySearch=&chkKeyTitle=on' /><p class='text-right text-black'>알라딘에서 더 많은 결과 보기</p></a>");
+									out.print("<div class='row border border-light shadow m-5 p-5' style='padding-top:40px;'>");
+									Object a = object.get("totalResults");
 									// 실제 리스트 뽑기 
 
 									for (int i = 0; i < items.size(); i++) {
@@ -255,18 +264,26 @@ book img start-->.thumbnail_image {
 												+ "\' target='_blank'><img class='thumbnail' src=\"" + results.get("cover")
 												+ "\"></img></a><span class='thumbnail-border'></span><br>");
 										out.print("<p class='card-title'><b>" + results.get("title") + "</b></p><br>");
-										out.print("<button type='submit' class='btn btn-warning' id='testBtn' onclick=\"location.href='http://localhost:8080/bookbook/library?isbn="+results.get("isbn13")+"'\">도서관 검색</button>");
-										out.print("<p>"+results.get("isbn13")+"</p>");
+										out.print(
+												"<button type='submit' class='btn btn-warning' id='testBtn' onclick=\"location.href='http://localhost:8080/bookbook/library?isbn="
+														+ results.get("isbn13") + "'\">도서관 검색</button>");
+										out.print("<p> isbn코드 : " + results.get("isbn13") + "</p>");
 										//out.print("link : <b>" + results.get("link") + "</b><br>");
+
 										if (test.get(items.size() + i).equals("") || test.get(items.size() + i).equals("-")
 												|| test.get(i).equals("") || test.get(i).equals("-")) {
 											out.print("사이트에서 가격정보를 확인하세요.");
 											continue;
 										} else {
+											//out.print("aaaaaaaaaaaaaaaaaaaaaaaaaaa"+a);
+											//out.print("bbbbbbbbbbbbbbbbb"+test.get(items.size()).length()+"    bbbbb");
+
 											out.print("<del>" + results.get("priceStandard") + "</del> <b>" + test.get(items.size() + i)
 													+ "원</b><br>");
 											out.print("총 재고 : <b>" + test.get(i) + "권</b><br>");
+
 										}
+
 										//out.print("salePrice : <b>" + test.get(items.size() + i) + "</b><br>");
 										//out.print(results.get("stockStatus") instanceof String);
 										int range = 0;
@@ -286,7 +303,7 @@ book img start-->.thumbnail_image {
 						<hr>
 						<!-- YES24 결과 -->
 						<%
-							out.print("<h2><em>[" + keyword + "]</em> 에 대한 YES24 검색 결과 입니다.</h2>");
+							out.print("<h2 class='color-red'>\"" + keyword + "\" 에 대한 YES24 검색 결과 입니다.</h2>");
 								String aa = (String) request.getAttribute("hash");
 								Object obj2 = JSONValue.parse(aa);
 								JSONObject object2 = (JSONObject) obj2;
@@ -296,9 +313,9 @@ book img start-->.thumbnail_image {
 								 */ out.print(
 										"<a href='http://www.yes24.com/searchcorner/Search?keywordAd=&keyword=&domain=USED_GOODS&qdomain=UsedGoods&query="
 												+ URLEncoder.encode(keyword, "EUC-KR")
-												+ "/' /><p class='text-right text-black'>YES24에서 더 많은 결과 보기</p></a><hr>");
+												+ "/' /><p class='text-right text-black'>YES24에서 더 많은 결과 보기</p></a>");
 
-								out.print("<div class='row'>");
+								out.print("<div class='row border border-light shadow m-5 p-5'>");
 								for (int i = 0; i < res2.size(); i++) {
 									out.print("<div class='col-lg-3 thumbnail_image'>");
 
@@ -313,7 +330,7 @@ book img start-->.thumbnail_image {
 								out.print("</div>");
 						%>
 					</c:if>
-					
+
 				</center>
 			</div>
 		</div>
@@ -330,7 +347,7 @@ book img start-->.thumbnail_image {
 
 	<!-- script -->
 	<script type="text/javascript">
-	
+		
 	</script>
 
 </body>

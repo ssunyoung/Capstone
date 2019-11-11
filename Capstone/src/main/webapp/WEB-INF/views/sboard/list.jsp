@@ -124,13 +124,6 @@
 }
 
 /*navbar end*/
-.happy {
-	color: saddlebrown;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
 .happy2 {
 	background: #f4f2e9;
 }
@@ -181,7 +174,7 @@ body {
 				<div class="col-lg-6 col-md-6 col-sm-12 p-0 ">
 					<input class="form-control search-slt" type="text"
 						placeholder="검색어를 입력해주세요." name='keyword' id="keywordInput"
-						value='${cri.keyword}' />
+						value='${cri.keyword}' required />
 				</div>
 				<!--end of col-->
 				<div class="col-lg-3 col-md-3 col-sm-12 p-0 ">
@@ -190,6 +183,8 @@ body {
 
 			</div>
 			<!-- end of SearchBox -->
+			
+			
 			<div class="col-lg-12 p-0"
 				style="margin-top: 20px; margin-bottom: 20px; text-align: right;">
 				<button id="newBtn" class="btn btn-lg btn-danger wrn-btn">중고책
@@ -214,8 +209,9 @@ body {
 			<th>phone</th>
 			<th>contraction</th> -->
 						<th>regDate</th>
-<!-- 						<th>viewcnt</th>
- -->					</tr>
+						<!-- 						<th>viewcnt</th>
+ -->
+					</tr>
 				</thead>
 				<c:forEach items="${list}" var="boardVO">
 					<tr>
@@ -244,7 +240,7 @@ body {
 			</table>
 			<!-- end of board list All -->
 			<!-- paging start 제발 좀 성공해라 좀좆ㅁ좆ㅁ좀ㅈ몸ㅈ -->
-			<div class="text-center">
+			<div class="row d-flex justify-content-center">
 				<ul class="pagination text-center">
 					<c:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link"

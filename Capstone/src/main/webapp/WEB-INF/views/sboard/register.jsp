@@ -10,50 +10,6 @@
 <title>중고장터</title>
 
 <style type="text/css">
-/*jumbotron*/
-.jumbotron {
-	position: relative;
-	overflow: hidden;
-}
-
-.jumbotron .container {
-	position: relative;
-	z-index: 2;
-	/*투명색 조절*/
-	background: rgba(0, 0, 0, 0.2);
-	padding: 2rem;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-radius: 3px;
-	margin-top: 40px;
-}
-
-.jumbotron-background {
-	object-fit: cover;
-	font-family: 'object-fit: cover;';
-	position: absolute;
-	top: 0;
-	z-index: 1;
-	width: 100%;
-	height: 100%;
-	opacity: 0.5;
-}
-
-img.blur {
-	-webkit-filter: blur(1px);
-	filter: blur(0px);
-	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='4');
-	width: 100%;
-	height: 100%;
-}
-
-.title {
-	font-size: 4.5rem;
-	font-weight: 400;
-	line-height: 1.2;
-}
-
-/*jumbotron end*/
-
 /*navbar start*/
 @media ( min-width : 768px) {
 	.navbar-custom {
@@ -179,11 +135,16 @@ img.blur {
 		background: white;
 	}
 }
+
+body {
+	background-color: #f4f2e9;
+	background-image:
+		url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
 </style>
-<body class="happy2">
+<body>
 	<!-- nav -->
 	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
-
 	<!-- /nav -->
 
 	<br>
@@ -194,72 +155,114 @@ img.blur {
 	<br>
 	<div class="container main-custom">
 
-		<div class="btn btn-secondary wrn-btn">
-			<a onclick="openChild()">온라인검색결과가져오기</a>
+		<div class="col-lg-12 p-0"
+			style="margin-top: 20px; margin-bottom: 20px; text-align: right;">
+			<button class="btn btn-lg btn-danger wrn-btn" onclick="openChild()">온라인검색결과가져오기</button>
 		</div>
-		<br>
-		<br>
+		<br> <br>
 
 
 		<!-- board Register Form -->
 		<form role="form" method="post">
-			<div class="box-body">
-				<div class="form-group">
-					<label for="Title">Title</label> <input type="text" name="title"
-						class="form-control" id="title" placeholder="Enter BOOK Title">
+			<div class="card shadow-sm p-3 mb rounded">
+				<div class="card-header">중고책 등록 폼</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="form-group col">
+							<label for="Title">Title</label> <input type="text" name="title"
+								class="form-control" id="title" placeholder="Enter BOOK Title"
+								required />
+						</div>
+						<div class="form-group col">
+							<label for="Writer">Writer</label> <input type="text"
+								name="writer" id="writer" class="form-control"
+								placeholder="Enter Writer" required />
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<label for="publisher">publisher</label> <input type="text"
+								name="publisher" id="publisher" class="form-control"
+								placeholder="Enter publisher" required />
+						</div>
+						<div class="form-group col">
+							<label for="pubdate">pubdate</label> <input type="text"
+								name="pubdate" id="pubdate" class="form-control"
+								placeholder="Enter publishing date" required />
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<label for="org_price">org_price</label> <input type="text"
+								id="price" name="org_price" class="form-control"
+								placeholder="Enter Original price" required />
+						</div>
+						<div class="form-group col">
+							<label for="isbn">isbn</label> <input type="text" name="isbn"
+								class="form-control" id="isbn" placeholder="Enter isbn number"
+								required />
+						</div>
+					</div>
 				</div>
-				<div class="form-group">
-					<label for="Writer">Writer</label> <input type="text" name="writer"
-						id="writer" class="form-control" placeholder="Enter Writer">
+				<!--  card body 1 done -->
+				<div class="accordion" id="accordion">
+					<div class="card">
+						<div class="card-header" id="headingOne">
+							<button class="btn" type="button" data-toggle="collapse"
+								data-target="#collapseOne" aria-expanded="true"
+								aria-controls="collapseOne">중고책 등록 폼 - CLICK!</button>
+						</div>
+					</div>
+					<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+						data-parent="#accordion">
+						<div class="card-body">
+							<div class="row">
+								<div class="form-group col">
+									<label for="sale_price">sale_price</label> <input type="text"
+										name="sale_price" class="form-control"
+										placeholder="Enter Sale price" required />
+								</div>
+								<div class="form-group col">
+									<label for="Grade">Grade</label> <input type="text"
+										name="grade" class="form-control"
+										placeholder="Enter book Status ex)상 중 하" required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col">
+									<label for="content">Content</label>
+									<textarea class="form-control rounded-0" name="content"
+										rows="10" placeholder="Enter description...." required /></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col">
+									<label for="phone">phone</label> <input type="text"
+										name="phone" class="form-control"
+										placeholder="Enter your phone number" required />
+								</div>
+								<div class="form-group col">
+									<label for="contraction">contraction</label> <input type="text"
+										name="contraction" class="form-control"
+										placeholder="Enter contraction ways" required />
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- collpase done -->
 				</div>
-				<div class="form-group">
-					<label for="publisher">publisher</label> <input type="text"
-						name="publisher" id="publisher" class="form-control"
-						placeholder="Enter publisher">
+				<div class="card-footer text-center">
+					<button type="submit" class="btn btn-primary">등록</button>
 				</div>
-				<div class="form-group">
-					<label for="pubdate">pubdate</label> <input type="text"
-						name="pubdate" id="pubdate" class="form-control"
-						placeholder="Enter publishing date">
-				</div>
-				<div class="form-group">
-					<label for="isbn">isbn</label> <input type="text" name="isbn"
-						class="form-control" id="isbn" placeholder="Enter isbn number">
-				</div>
-				<div class="form-group">
-					<label for="org_price">org_price</label> <input type="text"
-						id="price" name="org_price" class="form-control"
-						placeholder="Enter Original price">
-				</div>
-				<div class="form-group">
-					<label for="sale_price">sale_price</label> <input type="text"
-						name="sale_price" class="form-control"
-						placeholder="Enter Sale price">
-				</div>
-				<div class="form-group">
-					<label for="Grade">Grade</label> <input type="text" name="grade"
-						class="form-control" placeholder="Enter book Status ex)상 중 하">
-				</div>
-				<div class="form-group">
-					<label for="Content">Content</label>
-					<textarea class="form-control rounded-0" name="content" rows="10"
-						placeholder="Enter description...."></textarea>
-				</div>
-				<div class="form-group">
-					<label for="phone">phone</label> <input type="text" name="phone"
-						class="form-control" placeholder="Enter your phone number">
-				</div>
-				<div class="form-group">
-					<label for="contraction">contraction</label> <input type="text"
-						name="contraction" class="form-control"
-						placeholder="Enter contraction ways">
-				</div>
+				<!-- card footer done -->
 			</div>
-			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</div>
+			<!-- card done -->
 		</form>
+
 		<!-- end of board Register Form -->
+
+
+
 		<!-- Footer -->
 		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 
@@ -274,7 +277,7 @@ img.blur {
 			window.name = "parentForm";
 			openWin = window.open("http://localhost:8080/sboard/naverSearch",
 					"childForm",
-					"width=800, height=600, resizable=no, location=no")
+					"width=1000, height=800, resizable=no, location=no")
 		}
 	</script>
 

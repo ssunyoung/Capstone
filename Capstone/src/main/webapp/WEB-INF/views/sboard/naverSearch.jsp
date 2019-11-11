@@ -12,227 +12,177 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Naver Searching</title>
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>북-북 WithNaver</title>
 
 <style type="text/css">
-
-/*navbar start*/
-@media ( min-width : 768px) {
-	.navbar-custom {
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 3px;
-		border-radius: 3px;
-		background-color: #f8bd3a;
-		width: auto;
-		color: black;
-	}
-	.nav-item a, .navbar-brand {
-		color: black;
-	}
+body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td,
+	form, fieldset, legend, input, textarea, button, select {
+	margin: 0;
+	padding: 0
 }
 
-.navbar-custom {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: #f8bd3a;
-	color: black;
+body, input, textarea, select, button, table {
+	font-family: '돋움', Dotum, AppleGothic, sans-serif;
+	font-size: 12px
 }
 
-.navbar-toggler-icon {
-	color: white;
-	border-color: black;
+img, fieldset {
+	border: 0
 }
 
-.navbar-toggler {
-	color: white;
-	border-color: black;
+ul, ol {
+	list-style: none
 }
 
-.navbar-custom .custom-toggler .navbar-toggler-icon {
-	background-image:
-		url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+em, address {
+	font-style: normal
 }
 
-.navbar-custom .custom-toggler .navbar-toggler {
-	border-color: black;
+a {
+	text-decoration: none
 }
 
-@media ( min-width : 768px) {
-	.navbar-wrapper {
-		/* position: relative; */
-		right: 0;
-		left: 0;
-		z-index: 20;
-		color: #f8bd3a;
-	}
+a:hover, a:active, a:focus {
+	text-decoration: underline
 }
 
-.navbar-wrapper {
-	position: absolute;
-	top: -2px;
-	right: 0;
-	left: 0;
-	/* margin-top: 20px; */
-	z-index: 20;
-	width: auto;
-	color: #f8bd3a;
+.search_book {
+	margin: 10px;
 }
 
-.text-yellow {
-	color: #f8bd3a;
+.result {
+	margin: 20px;
 }
 
-/*navbar end*/
-.happy {
-	color: saddlebrown;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+.green_window {
+	display: inline-block;
+	width: 366px;
+	height: 34px;
+	border: 3px solid #2db400;
+	background: white;
 }
 
-.happy2 {
-	background: #f4f2e9;
-}
-
-/*search box css start here*/
-.search-sec {
-	padding: 2rem;
-}
-
-.search-slt {
-	display: block;
-	width: 100%;
-	font-size: 0.875rem;
-	line-height: 1.5;
-	color: #55595c;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	height: calc(3rem + 2px) !important;
-	border-radius: 0;
-}
-
-.wrn-btn {
-	width: 100%;
+.input_text {
+	width: 348px;
+	height: 21px;
+	margin: 6px 0 0 9px;
+	border: 0;
+	line-height: 21px;
+	font-weight: bold;
 	font-size: 16px;
+	outline: none;
+}
+
+.sch_smit {
+	width: 54px;
+	height: 40px;
+	margin: 0;
+	border: 0;
+	vertical-align: top;
+	background: #22B600;
+	color: white;
+	font-weight: bold;
+	border-radius: 1px;
+	cursor: pointer;
+}
+
+.sch_smit:hover {
+	background: #56C82C;
+}
+
+.title {
+	font-size: 2.0rem;
 	font-weight: 400;
-	text-transform: capitalize;
-	height: calc(3rem + 2px) !important;
-	border-radius: 0;
-	background-color: #f8bd3a;
-	border-color: #f8bd3a;
-}
-
-@media ( min-width : 992px) {
-	.search-sec {
-		position: relative;
-		top: -114px;
-		background: white;
-	}
-}
-
-@media ( max-width : 992px) {
-	.search-sec {
-		background: white;
-	}
-}
-
-/* book img start */
-.thumbnail_image {
-	position: relative;
-	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.thumbnail_image::before {
-	content: "";
-	box-sizing: border-box;
-	display: block;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	background: linear-gradient(to right, rgba(0, 0, 0, 0.2) 0px,
-		transparent 5%, transparent 95%, rgba(0, 0, 0, 0.2) 100%);
-}
-
-.thumbnail {
-	max-height: 313px;
-}
-
-.thumbnail-border {
-	box-sizing: border-box;
-	opacity: 0.2;
-	display: block;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	z-index: 3;
-	border: 1px solid #000;
+	line-height: 1.2;
 }
 </style>
 </head>
-<body class="happy2">
-
-	<!-- nav -->
-	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
-
+<body style="background-color: #f2f4f7;">
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<h1>naver search page</h1>
 	<div class="container">
+		<p class="title">NAVER에서 책을 검색하고,</p>
+		<p class="title" style="color: #22B600;">'값 전달 '</p>
+		<p class="title">버튼을 클릭하여 정보를 가져오세요.</p>
+		<br>
 		<!-- Search box -->
-		<form>
-			<div class="row shadow p-4 mb-4 bg-white ">
-				<!--end of col-->
+		<div class="row shadow p-4 mb-4 bg-white col-sm-12 text-center">
+			<center>
 				<form action="/sboard/naverSearch" method="GET">
-					<input class="form-control search-slt" type="text"
-						placeholder="책 이름  검색하시오." name='naverQuery' id="" />
+					<span class='green_window'> <input class="input_text"
+						type="text" placeholder="책 이름  검색하시오." name='naverQuery' id=""
+						required />
+					</span>
+					<button id="searchBtn" class="sch_smit">검색</button>
 				</form>
-				<button id="searchBtn" class="btn btn-danger wrn-btn">Search</button>
-			</div>
-		</form>
+			</center>
+		</div>
 		<!-- end of SearchBox -->
-
+		<br>
 		<!-- Naver Searching Part -->
-		<table border="1" bgcolor="pink">
-			<tr>
-				<td colspan="7" bgcolor="pink"></td>
-			</tr>
+		<div class="bg-white col-sm-12 text-center">
 
-			<c:forEach items="${naverRes}" var="b">
-				<tr>
-					<td rowspan="2"><img src="${b.image}"
-						></td>
-					<td rowspan="4" width="800"><input value="${b.title }"
-						id="title" /></td>
-					<td width="200"><input value="${b.author}" id="writer" /></td>
-				</tr>
-				<tr>
-					<td width="200"><input value="${b.price }" id="price" /></td>
-					<td width="200">${b.discount }</td>
-					<td width="200"><input value="${b.publisher }" id="publisher" /></td>
-					<td width="200"><input value="${b.pubdate }" id="pubdate" /></td>
-					<td width="200"><input value="${b.isbn }" id="isbn" /></td>
-				</tr>
+			<table cellspacing="0" border="1" summary="책검색 API 결과"
+				class="tbl_type tbl text-center">
+				<colgroup>
+					<col width="5%">
+					<col width="10%">
+					<col width="20%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+					<col width="10%">
+					<col width="15%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">num</th>
+						<th scope="col">책표지</th>
+						<th scope="col">책이름</th>
+						<th scope="col">저자</th>
+						<th scope="col">가격(원가)</th>
+						<th scope="col">출판사</th>
+						<th scope="col">출판년도</th>
+						<th scope="col">ISBN</th>
+					</tr>
+				</thead>
 
-				<tr>
+				<c:forEach items="${naverRes}" var="b" varStatus="status">
+					<tr class="__template"><td><c:out value="${status.index}" /></td></tr>
+					<tr class="__template">
+						<td rowspan="2"><img src="${b.image}"></td>
+						<td rowspan="4" width="800"><input value="${b.title}"
+							id="title${status.index}"  readonly /></td>
+						<td rowspan="2" width="200"><input value="${b.author}"
+							id="writer${status.index}" readonly /></td>
+					</tr>
+					<tr class="__template">
+						<td width="200"><input value="${b.price }" id="price${status.index}"
+							readonly /></td>
+						<td width="200"><input value="${b.publisher }" id="publisher${status.index}"
+							readonly /></td>
+						<td width="200"><input value="${b.pubdate }" id="pubdate${status.index}"
+							readonly /></td>
 
-					<td colspan="7">${b.description}<input type="button"
-						value="전달하기" onclick="setParentText(); window.close(); alert('자동완성 처리완료 나머지 정보를 입력해주세요.')" />
-					</td>
-				</tr>
-				<tr>
-					<td colspan="7" width="100%" bgcolor="pink"></td>
+						<td width="200"><input value="${b.isbn }" id="isbn${status.index}" readonly /></td>
+					</tr>
 
-				</tr>
+					<tr class="__template">
+						<td colspan="7">${b.description}<input type="button"
+							class="sch_smit" value="값 전달"
+							onclick="setParentText(${status.index}); window.close(); alert('자동완성 처리완료'); alert('나머지 정보를 입력해주세요.');" />
 
-			</c:forEach>
-		</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="7" width="100%"></td>
+					</tr>
+
+				</c:forEach>
+			</table>
+		</div>
 		<!-- End of Naver Searching Part -->
 
 		<!--  conatiner end -->
@@ -241,23 +191,23 @@
 
 	<!-- script -->
 	<script type="text/javascript">
-		$('#collapsibleNavbar').collapse({
-			toggle : false
-		})
-
-		function setParentText() {
+		function setParentText(idx) {
+			console.log(idx+"인덱스번호ㅗㅗㅗㅗㅗ");
 			opener.document.getElementById("title").value = document
-					.getElementById("title").value;
+					.getElementById("title"+idx).value;
 			opener.document.getElementById("writer").value = document
-					.getElementById("writer").value;
+					.getElementById("writer"+idx).value;
 			opener.document.getElementById("publisher").value = document
-					.getElementById("publisher").value;
+					.getElementById("publisher"+idx).value;
 			opener.document.getElementById("pubdate").value = document
-					.getElementById("pubdate").value;
+					.getElementById("pubdate"+idx).value;
 			opener.document.getElementById("price").value = document
-					.getElementById("price").value;
-			opener.document.getElementById("isbn").value = document
-					.getElementById("isbn").value;
+					.getElementById("price"+idx).value;
+			//isbn 13자리만 뽑아낼거야아
+			var isbnParse = document.getElementById("isbn"+idx).value.split(' ');
+			console.log(isbnParse+"제발요!!!!!!!!!!!!!!");
+			//console.log("happyyyyyyyyyyyyyyyyy"+document.getElementById("title").value);
+			opener.document.getElementById("isbn").value = isbnParse[1];
 
 		}
 	</script>

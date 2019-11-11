@@ -93,9 +93,15 @@
 .main-custom {
 	backgournd-color: lightyellow !important;
 }
+
+body {
+	background-color: #f4f2e9;
+	background-image:
+		url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
 </style>
 <!-- end of style -->
-<body class="happy2">
+<body>
 	<!-- nav -->
 	<%@include file="/WEB-INF/views/include/navbar.jsp"%>
 	<!-- /nav -->
@@ -109,7 +115,121 @@
 
 	<div class="container">
 
-		<!-- board Register Form -->
+		<!-- board MODIFY Form -->
+		<p class="text-right"><b>${boardVO.bno}</b>번 게시물</p>
+		<form role="form" action="modifyPage" method="post">
+			<input type='hidden' name='page' value="${cri.page}"> <input
+				type='hidden' name='perPageNum' value="${cri.perPageNum}">
+			<div class="card shadow-sm p-3 mb rounded">
+				<div class="card-header">중고책 수정 폼</div>
+				<div class="form-group">
+					<label for="bno"></label> <input type='hidden' name='bno'
+						value="${boardVO.bno}" readonly="readonly" />
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="form-group col">
+							<label for="Title">Title</label> <input type="text" name="title"
+								class="form-control" id="title" value="${boardVO.title}"
+								placeholder="Enter BOOK Title" required />
+						</div>
+						<div class="form-group col">
+							<label for="Writer">Writer</label> <input type="text"
+								name="writer" id="writer" class="form-control"
+								placeholder="Enter Writer" value="${boardVO.writer}" required />
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<label for="publisher">publisher</label> <input type="text"
+								name="publisher" id="publisher" class="form-control"
+								value="${boardVO.publisher}" placeholder="Enter publisher"
+								required />
+						</div>
+						<div class="form-group col">
+							<label for="pubdate">pubdate</label> <input type="text"
+								name="pubdate" id="pubdate" class="form-control"
+								value="${boardVO.pubdate}" placeholder="Enter publishing date"
+								required />
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col">
+							<label for="org_price">org_price</label> <input type="text"
+								id="price" name="org_price" class="form-control"
+								value="${boardVO.org_price}" placeholder="Enter Original price"
+								required />
+						</div>
+						<div class="form-group col">
+							<label for="isbn">isbn</label> <input type="text" name="isbn"
+								class="form-control" id="isbn" value="${boardVO.isbn}"
+								placeholder="Enter isbn number" required />
+						</div>
+					</div>
+				</div>
+				<!--  card body 1 done -->
+				<div class="accordion" id="accordion">
+					<div class="card">
+						<div class="card-header" id="headingOne">
+							<button class="btn" type="button" data-toggle="collapse"
+								data-target="#collapseOne" aria-expanded="true"
+								aria-controls="collapseOne">중고책 수정 폼 - CLICK!</button>
+						</div>
+					</div>
+					<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+						data-parent="#accordion">
+						<div class="card-body">
+							<div class="row">
+								<div class="form-group col">
+									<label for="sale_price">sale_price</label> <input type="text"
+										name="sale_price" class="form-control"
+										value="${boardVO.sale_price}" placeholder="Enter Sale price"
+										required />
+								</div>
+								<div class="form-group col">
+									<label for="Grade">Grade</label> <input type="text"
+										name="grade" class="form-control" value="${boardVO.grade}"
+										placeholder="Enter book Status ex)상 중 하" required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col">
+									<label for="Content">Content</label>
+									<textarea class="form-control rounded-0" name="content"
+										value="${boardVO.content}" rows="10"
+										placeholder="Enter description...." required>${boardVO.content}</textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col">
+									<label for="phone">phone</label> <input type="text"
+										name="phone" class="form-control" value="${boardVO.phone}"
+										placeholder="Enter your phone number" required />
+								</div>
+								<div class="form-group col">
+									<label for="contraction">contraction</label> <input type="text"
+										name="contraction" class="form-control"
+										value="${boardVO.contraction}"
+										placeholder="Enter contraction ways" required />
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- collpase done -->
+				</div>
+				<div class="card-footer text-center">
+					<button type="submit" class="btn btn-primary">SAVE</button>
+					<button type="submit" class="btn btn-warning">CANCEL</button>
+				</div>
+				<!-- card footer done -->
+			</div>
+			<!-- card done -->
+		</form>
+
+		<!-- end of board MODIFY Form -->
+
+
+		<%-- <!-- board Register Form -->
 		<div class="container main-custom">
 			<form role="form" action="modifyPage" method="post">
 				<input type='hidden' name='page' value="${cri.page}"> <input
@@ -124,58 +244,62 @@
 					<div class="form-group">
 						<label for="Title">Title</label> <input type="text" name="title"
 							class="form-control" value="${boardVO.title}"
-							placeholder="Enter BOOK Title">
+							placeholder="Enter BOOK Title" required />
 					</div>
 					<div class="form-group">
 						<label for="Writer">Writer</label> <input type="text"
 							name="writer" class="form-control" value="${boardVO.writer}"
-							placeholder="Enter Writer">
+							placeholder="Enter Writer" required />
 					</div>
 					<div class="form-group">
 						<label for="publisher">publisher</label> <input type="text"
 							name="publisher" class="form-control"
-							value="${boardVO.publisher}" placeholder="Enter publisher">
+							value="${boardVO.publisher}" placeholder="Enter publisher"
+							required />
 					</div>
 					<div class="form-group">
 						<label for="pubdate">pubdate</label> <input type="text"
 							name="pubdate" class="form-control" value="${boardVO.pubdate}"
-							placeholder="Enter publishing date">
+							placeholder="Enter publishing date" required />
 					</div>
 					<div class="form-group">
 						<label for="isbn">isbn</label> <input type="text" name="isbn"
 							class="form-control" value="${boardVO.isbn}"
-							placeholder="Enter isbn number">
+							placeholder="Enter isbn number" required />
 					</div>
 					<div class="form-group">
 						<label for="org_price">org_price</label> <input type="text"
 							name="org_price" class="form-control"
-							value="${boardVO.org_price}" placeholder="Enter Original price">
+							value="${boardVO.org_price}" placeholder="Enter Original price"
+							required />
 					</div>
 					<div class="form-group">
 						<label for="sale_price">sale_price</label> <input type="text"
 							name="sale_price" class="form-control"
-							value="${boardVO.sale_price}" placeholder="Enter Sale price">
+							value="${boardVO.sale_price}" placeholder="Enter Sale price"
+							required />
 					</div>
 					<div class="form-group">
 						<label for="Grade">Grade</label> <input type="text" name="grade"
 							class="form-control" value="${boardVO.grade}"
-							placeholder="Enter book Status ex)상 중 하">
+							placeholder="Enter book Status ex)상 중 하" required />
 					</div>
 					<div class="form-group">
 						<label for="Content">Content</label>
 						<textarea class="form-control rounded-0" name="content" rows="10"
-							value="${boardVO.content}" placeholder="Enter description...."></textarea>
+							value="${boardVO.content}" placeholder="Enter description...."
+							required /></textarea>
 					</div>
 					<div class="form-group">
 						<label for="phone">phone</label> <input type="text" name="phone"
 							class="form-control" value="${boardVO.phone}"
-							placeholder="Enter your phone number">
+							placeholder="Enter your phone number" required />
 					</div>
 					<div class="form-group">
 						<label for="contraction">contraction</label> <input type="text"
 							name="contraction" class="form-control"
 							value="${boardVO.contraction}"
-							placeholder="Enter contraction ways">
+							placeholder="Enter contraction ways" required />
 					</div>
 				</div>
 			</form>
@@ -186,18 +310,13 @@
 			</div>
 		</div>
 		<!-- end of board Register Form -->
-
+ --%>
 		<!-- Footer -->
 		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 
 		<!-- Footer end-->
 	</div>
 	<!-- script -->
-	<script type="text/javascript">
-		$('#collapsibleNavbar').collapse({
-			toggle : false
-		})
-	</script>
 
 	<script>
 		$(document)

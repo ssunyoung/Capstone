@@ -90,10 +90,10 @@ public class BookServiceImpl implements BookService {
 
 		JSONObject yesRes = new JSONObject();
 		yesRes.put("res", jsonArray);
-		System.out.println("YES24 SERVICE START ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+		//System.out.println("YES24 SERVICE START ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
 
-		System.out.println(yesRes);
-		System.out.println("YES24 SERVICE END ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+		//System.out.println(yesRes);
+		//System.out.println("YES24 SERVICE END ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
 		// ArrayList<String> results = null;
 		// results.add(title.text());
 
@@ -126,6 +126,10 @@ public class BookServiceImpl implements BookService {
 			String receiveMsg = buffer.toString();
 			// System.out.println("&&&&&&&&&&&" + receiveMsg);
 			resultSet = receiveMsg;
+			System.out.println("////////******888/////////////////////ALADIN API////////////////////////////");
+			System.out.println(resultSet);
+			System.out.println("////////*******888//////////////ALADIN API///////////////////////////////////");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,7 +137,6 @@ public class BookServiceImpl implements BookService {
 	}
 
 	// aladin Crawler
-
 	@Override
 	public ArrayList<String> aladinCrawler(String query) throws IOException {
 
@@ -145,6 +148,8 @@ public class BookServiceImpl implements BookService {
 
 		// 개수
 		Elements usedBookNum = rawData.select("td:nth-child(5) table tbody tr:nth-child(2) td a span[class=bo_used_s]");
+		//td:nth-child(5) table tbody tr:nth-child(2) td a span[class=bo_used_s]
+		//td:nth-child(5) > table > tbody > tr:nth-child(2) > td > span
 		// System.out.println(usedBookNum);
 		// System.out.println("*************************************************************
 		// \n" + usedBookNum);
@@ -155,7 +160,7 @@ public class BookServiceImpl implements BookService {
 		for (Element usedBookNums : usedBookNum) {
 			String result = usedBookNums.text();
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$알라딘 재고수 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-			System.out.println(result);
+			System.out.println(result+"***");
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$알라딘 재고수$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 
 			result = result.replaceAll("[(,)]", "");
@@ -169,23 +174,30 @@ public class BookServiceImpl implements BookService {
 
 		// 가격 구하기.
 		Elements usedBookPrice = rawData.select("td:nth-child(5) table tbody tr:nth-child(4) td a[class=bo_used] b");
+		//for checking
+		//Elements checkPrice = rawData.select("td:nth-child(5) table tbody tr:nth-child(4) td span[class=bo_used]");
+		//td:nth-child(5) > table > tbody > tr:nth-child(4) > td > span
 		// System.out.println(usedBookPrice);
 
 		for (Element usedBookPrices : usedBookPrice) {
 			String result = usedBookPrices.text();
-
+		//	String check = checkPrice.text();
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$알라딘 중고가 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 			System.out.println(result);
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$알라딘 중고가$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 
 			result = result.replaceAll("[원,\\,]", "");
-			System.out.println("test price size" + test.size());
 
 			// 10개 결과만 뽑기 위함
 			if (test.size() >= 20)
 				break;
 			test.add(result);
 		}
+		
+		System.out.println("/////////////////////////////ALADIN TEST CRAWLER////////////////////////////");
+				System.out.println(test);
+		System.out.println("/////////////////////////////ALADIN TEST CRAWLER////////////////////////////");
+
 
 		return test;
 	}

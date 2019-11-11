@@ -35,7 +35,8 @@
 		delete from tbl_board where bno = #{bno}
 	</delete>
 
-	<select id="listAll" resultType="com.ssun.everybook.domain.BoardVO">
+	<select id="listAll"
+		resultType="com.ssun.everybook.domain.BoardVO">
 	<![CDATA[
 	select bno, title, writer, publisher, pubdate, img, isbn, org_price, sale_price, grade, content, phone, contraction, place, regdate, viewcnt
 	from tbl_board
@@ -43,7 +44,8 @@
 	order by bno desc, regdate desc]]>
 	</select>
 
-	<select id="listPage" resultType="com.ssun.everybook.domain.BoardVO">
+	<select id="listPage"
+		resultType="com.ssun.everybook.domain.BoardVO">
 	<![CDATA[
 	select bno, title, writer, publisher, pubdate, img, isbn, org_price, sale_price, grade, content, phone, contraction, place, regdate, viewcnt
 	from tbl_board
@@ -53,7 +55,8 @@
 	]]>
 	</select>
 
-	<select id="listCriteria" resultType="com.ssun.everybook.domain.BoardVO">
+	<select id="listCriteria"
+		resultType="com.ssun.everybook.domain.BoardVO">
 	<![CDATA[
 	select bno, title, writer, publisher, pubdate, img, isbn, org_price, sale_price, grade, content, phone, contraction, place, regdate, viewcnt
 	from tbl_board
@@ -75,7 +78,8 @@
 	</select>
 
 	<!-- DYNAMIC SQL -->
-	<select id="listSearch" resultType="com.ssun.everybook.domain.BoardVO">
+	<select id="listSearch"
+		resultType="com.ssun.everybook.domain.BoardVO">
 	
 	<![CDATA[
 	select 
@@ -114,17 +118,17 @@
 
 	<sql id="search">
 		<if test="searchType != null">
-		<!--  수정 요망 -->
+			<!-- 수정 요망 -->
 			<if test="searchType == 'n'.toString()">
 				AND (
 				title LIKE CONCAT('%', #{keyword}, '%')
 				OR
 				content
-				LIKE CONCAT('%',
-				#{keyword}, '%')
+				LIKE CONCAT('%', #{keyword}, '%')
 				OR
-				writer LIKE CONCAT('%',
-				#{keyword}, '%')
+				writer LIKE CONCAT('%', #{keyword}, '%')
+				OR
+				publisher LIKE CONCAT('%', #{keyword}, '%')
 				)
 			</if>
 			<if test="searchType == 't'.toString()">

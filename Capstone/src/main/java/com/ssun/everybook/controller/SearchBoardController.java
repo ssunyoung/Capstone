@@ -18,6 +18,7 @@ import com.ssun.everybook.domain.BoardVO;
 //import com.ssun.everybook.domain.Criteria;
 import com.ssun.everybook.domain.PageMaker;
 import com.ssun.everybook.domain.SearchCriteria;
+import com.ssun.everybook.domain.SearchNaver;
 import com.ssun.everybook.service.BoardService;
 import com.ssun.everybook.service.NaverService;
 
@@ -61,17 +62,18 @@ public class SearchBoardController {
 
 	// Naver 검색결과 페이지
 	@RequestMapping(value = "/naverSearch", method = RequestMethod.GET)
-	public ModelAndView naverSearching(HttpServletRequest request, @RequestParam(required = false) String naverQuery)
-			throws Exception {
+	public ModelAndView naverSearching(HttpServletRequest request, SearchNaver naverVO,
+			@RequestParam(required = false) String naverQuery) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		logger.info("naver searching controller 실행..................");
 
 		if (naverQuery != null) {
+
 			mav.addObject("naverRes", naverService.searchBook(naverQuery, 10, 1));
+			System.out.println("************************************************");
 		}
 		mav.setViewName("/sboard/naverSearch");
-		
-		
+
 		return mav;
 	}
 

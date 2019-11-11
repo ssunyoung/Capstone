@@ -184,7 +184,7 @@ body {
 							<input
 								class="form-control form-control-lg form-control-borderless"
 								type="text" placeholder="검색어를 입력해보세요." name='keyword'
-								id="keywordInput" value='${cri.keyword}' />
+								id="keywordInput" value='${cri.keyword}' required/>
 						</div>
 						<div class="col-auto">
 							&nbsp
@@ -242,7 +242,7 @@ body {
 				<div class="book-default">
 								<h6 class="text-center">
 						<br><br><br>
-						<em>이용이 <br>처음이신가요?</em>
+						<b>이용이 <br>처음이신가요?</b>
 						<br><br>
 						<a href="/bookbook/help">도움말 보러가기</a>
 					</h6>
