@@ -197,8 +197,10 @@ body {
 				<thead>
 					<tr>
 						<th style="width: 10px">BNO</th>
+						<th>image</th>
 						<th>Title</th>
 						<th>Writer</th>
+						
 						<!-- <th>publisher</th>
 			<th>pubdate</th>
 			<th>isbn</th>
@@ -216,6 +218,8 @@ body {
 				<c:forEach items="${list}" var="boardVO">
 					<tr>
 						<td>${boardVO.bno}</td>
+						<td><img src="${boardVO.img}"></td>
+						
 						<td>
 							<%-- <a
 						href='/board/readPage${pageMaker.makeQuery(pageMaker.cri.page)}&bno=${boardVO.bno}'>${boardVO.title}</a> --%>

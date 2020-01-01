@@ -1,5 +1,6 @@
 package com.ssun.everybook.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class BoardVO {
@@ -20,6 +21,16 @@ public class BoardVO {
 	private String place;
 	private Date regDate;
 	private int viewcnt;
+
+	private String[] files;
+
+	public String[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
 
 	public Integer getBno() {
 		return bno;
@@ -155,7 +166,7 @@ public class BoardVO {
 				+ ", pubdate=" + pubdate + ", img=" + img + ", isbn=" + isbn + ", org_price=" + org_price
 				+ ", sale_price=" + sale_price + ", grade=" + grade + ", content=" + content + ", phone=" + phone
 				+ ", contraction=" + contraction + ", place=" + place + ", regDate=" + regDate + ", viewcnt=" + viewcnt
-				+ "]";
+				+ ", files=" + Arrays.toString(files) + "]";
 	}
 
 }

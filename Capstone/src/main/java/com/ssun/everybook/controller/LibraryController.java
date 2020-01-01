@@ -47,12 +47,12 @@ public class LibraryController {
 				String naru = service.libraryApi(code, isbn); // 도서가 있으면
 				if (naru.equals("Y")) {
 					System.out.println("Controllerrrrrrrrrrrrrrrrrrrrrrrr + 소장하고있어요");
-					model.addAttribute("checking", "도서가 없습니다."); // 도서가 없으면
+					model.addAttribute("checking","도서가 있습니다.");
 					model.addAttribute("reCode",code);
 					//System.out.println("rerererererererererererereCode"+code);
 				} else if (naru.equals("N")) {
 					System.out.println("Controllerrrrrrrrrrrrrrrrrrrrrrrr - 없어요그런거");
-					model.addAttribute("checking", "도서가 있습니다.");
+					model.addAttribute("checking", "도서가 없습니다.");
 					model.addAttribute("reCode",code);
 					//System.out.println("rerererererererererererereCode"+code);
 				}

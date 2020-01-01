@@ -155,12 +155,12 @@
 				<form action="/bookbook/library" method="GET">
 					<div class="col-lg-6">
 						지역 : <input class="form-control search-slt" type="text"
-							placeholder="ex)서울시" name='region' required />
+							placeholder="ex)서울" name='region' required />
 					</div>
 					<div class="col-lg-6">
 
 						상세지역 : <input class="form-control search-slt" type="text"
-							placeholder="ex)성북구" name='region2' required /> <br>
+							placeholder="ex)성북" name='region2' required /> <br>
 					</div>
 					<div class="col-lg-12">
 						ISBN :<%

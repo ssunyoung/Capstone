@@ -145,7 +145,7 @@ body {
 
 /** ====================
  * Lista de Comentarios
- =======================*/
+ =======================**/
 .comments-container {
 	margin: 60px auto 15px;
 	width: 768px;
@@ -390,6 +390,21 @@ body {
 /** ====================
  * Lista de Comentarios
  =======================*/
+ 
+ /** ====================
+ * pop-up
+ =======================**/
+ .popup {position:absolute;}
+ .back {background-color:gra; opacity:0.5; width:100%; height:300%; overflow:hidden; z-index:1101;}
+ .front{
+ 	z-index:1110; opacity:1; boarder:1px; margin:auto;
+ }
+ .show{
+ 	position:relative;
+ 	max-width: 1200px;
+ 	max-height:800px;
+ 	overflow:auto;
+ }
 </style>
 <!-- end of style -->
 <body>
@@ -520,6 +535,16 @@ body {
 				<!-- collpase done -->
 			</div>
 			<div class="card-footer text-center">
+				<div>
+				<hr>
+				</div>
+				<div class='popup back' style="display:none;"></div>
+				<div id="popup_front" class='popup front' style="display:none;">
+					<img id="popup_img">
+				</div>
+				<ul class="mailbox-attachments clearfix uploadedList">
+				</ul>
+				
 				<button type="submit" class="btn btn-warning boardModBtn">Modify</button>
 				<button type="submit" class="btn btn-danger boardDelBtn">REMOVE</button>
 				<button type="submit" class="btn btn-primary boardLiBtn">List
@@ -614,7 +639,7 @@ body {
 			<div class="comment-box">
  				<div class="comment-head">
             	<h6 class="timeline-header comment-name by-author">
-					<strong>{{rno}}</strong>번째 댓글 --{{replyer}}가 씀
+					<strong style="display:none;">{{rno}}번째 댓글</strong> replyer-->{{replyer}}
 					<span class="time">
 	          		   <i class="fa fa-clock-o"></i>{{prettifyDate regdate}}
        		    	</span>
@@ -832,6 +857,89 @@ body {
 														});
 											});
 						});
+	</script>
+<!-- 	첨부파일 관련 -->
+	<script id="templateAttach" type= "text/x-handlebars-template">
+		<li data-src='{{fullName}}'>
+   		 <span class="mailbox-attachment-icon has-img">
+    		    <img src="{{imgsrc}}" alt="Attachment">
+  		  </span>
+   		 <div class="mailbox-attachment-info">
+    		   <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
+   		 </div>
+		</li>
+	</script>
+	<script>
+		var bno = ${boardVO.bno};
+		var template = Handlebars.compile($("#templateAttach").html());
+		
+		$.getJSON("/sboard/getAttach/"+bno,function(list){
+			$(list).each(function(){
+				var fileInfo = getFileInfo(this);
+				
+				var html = template(fileInfo);
+				
+				$(".uploadedList").append(html);
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		//이미지 파일 여부 확인
+		function checkImageType(fileName) {
+			// i 대소문자 구분 없음
+			var pattern = /jpg|gif|png|jpeg/i;
+	
+			return fileName.match(pattern);
+		}
+		
+		function getFileInfo(fullName){
+			
+			var fileName, imgsrc, getLink;
+			
+			var fileLink;
+			
+			if(checkImageType(fullName)){
+				imgsrc = "/sboard/register/displayFile?fileName="+fullName;
+				fileLink = fullName.substr(18);
+				
+				var front = fullName.substr(0,12);   //2019/11/26/
+				var end = fullName.substr(18);
+				
+				getLink = "/sboard/register/displayFile?fileName="+front+end;
+			}else{
+				//니가 추가해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				imgsrc = "/resources/images/book4.png";
+				fileLink = fullName.substr(12);
+				getLink="/sboard/register/displayFile?fileName="+fullName;
+			}
+			
+			fileName = fileLink.substr(fileLink.indexOf("_")+1);
+			
+			return {fileName:fileName, imgsrc:imgsrc, getLink:getLink, fullName:fullName};
+		}
+		
+	</script>
+	<script>
+		$(".uploadedList").on("click", ".mailbox-attachment-info a", function(event){
+			var fileLink = $(this).attr("href");
+			
+			if(checkImageType(fileLink)){
+				event.preventDefault();
+				
+				var imgTag = $("#popup_img");
+				imgTag.attr("src",fileLink);
+				
+				console.log(imgTag.attr("src"));
+				
+				$(".popup").show('slow');
+				imgTag.addClass("show");
+			}
+		});
+		
+		$('#popup_img').on("click", function(){
+			$(".popup").hide('slow');
+		});
+		
 	</script>
 </body>
 

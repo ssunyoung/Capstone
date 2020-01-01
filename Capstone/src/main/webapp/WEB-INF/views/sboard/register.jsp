@@ -136,6 +136,14 @@
 	}
 }
 
+.fileDrop {
+	width: 100%;
+	height: 250px;
+	border: 1px dotted gray;
+	background-color: lightslategrey;
+	margin: auto;
+}
+
 body {
 	background-color: #f4f2e9;
 	background-image:
@@ -163,7 +171,7 @@ body {
 
 
 		<!-- board Register Form -->
-		<form role="form" method="post">
+		<form role="form" id="registerForm" method="post">
 			<div class="card shadow-sm p-3 mb rounded">
 				<div class="card-header">중고책 등록 폼</div>
 				<div class="card-body">
@@ -201,6 +209,11 @@ body {
 							<label for="isbn">isbn</label> <input type="text" name="isbn"
 								class="form-control" id="isbn" placeholder="Enter isbn number"
 								required />
+						</div>
+					</div>
+					<div class="row">
+					<div class="form-group col">
+							<label for="image">image</label> <input type="text" id="image" name="img" class="form-control" placeholder="imageFile" />
 						</div>
 					</div>
 				</div>
@@ -248,10 +261,22 @@ body {
 								</div>
 							</div>
 						</div>
+						<!-- 파일 드래그 부분 -->
+						<div class="form-group">
+							<h3>File DROP Here</h3>
+							<div class="fileDrop"></div>
+						</div>
+						<!-- 파일 드래그 부분 -->
+						
 					</div>
 					<!-- collpase done -->
 				</div>
 				<div class="card-footer text-center">
+				<div>
+					<hr>
+				</div>
+				<ul class="mailbox-attachments clearfix uploadedList">
+				</ul>
 					<button type="submit" class="btn btn-primary">등록</button>
 				</div>
 				<!-- card footer done -->
@@ -275,12 +300,145 @@ body {
 
 		function openChild() {
 			window.name = "parentForm";
-			openWin = window.open("http://localhost:8080/sboard/naverSearch",
-					"childForm",
+			openWin = window.open("/sboard/naverSearch", "childForm",
 					"width=1000, height=800, resizable=no, location=no")
 		}
 	</script>
+	
+	
+	<script id="template" type= "text/x-handlebars-template">
+		<li>
+   		 <span class="mailbox-attachment-icon has-img">
+    		    <img src="{{imgsrc}}" alt="Attachment">
+  		  </span>
+   		 <div class="mailbox-attachment-info">
+    		   <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
+     		   <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delbtn"><i class="fa fa-fw fa-remove"></i></a>
+   		 </div>
+		</li>
+	</script>
+	
+	<script type = "text/javascript">
+		var template = Handlebars.compile($("#template").html());
+		
+		// 전체 페이지 첨부파일 drag & drop 기본 이벤트 방지
+		$(".fileDrop").on("dragenter dragover", function(event) {
+			event.preventDefault();
+		});
+		
+		// 첨부파일 drag & drop 이벤트 처리 : 파일 업로드 & 파일 출력.
+		$(".fileDrop").on("drop",function(event) {
+				event.preventDefault();
 
+				// drop 시 전달된 파일 데이터.
+				var files = event.originalEvent.dataTransfer.files;
+				//단일 파일데이터기때문에 첫번째 파일만 저장.
+				var file = files[0];
+
+				//console.log(file);
+				//파일 데이터 저장하는 변수
+				var formData = new FormData();
+
+				formData.append("file", file);
+
+				$.ajax({
+					url : '/sboard/register/uploadAjax',
+					data : formData,
+					dataType : 'text',
+					// 데이터를 일반적인 query String으로 변환할건지 결정.
+					// 기본값은 true 
+					// 자동변환 방지위해 false
+					processData : false,
+					//multipart/form-data방식으로 전송하기 위해 false
+					contentType : false,
+					type : 'POST',
+					success : function(data) {
+						alert(data);
+						var fileInfo = getFileInfo(data);
+						
+						var html = template(fileInfo);
+						
+						$(".uploadedList").append(html);
+					}
+				});
+		});
+		
+
+		
+	</script>
+	
+	<script type="text/javascript">
+		//이미지 파일 여부 확인
+		function checkImageType(fileName) {
+			// i 대소문자 구분 없음
+			var pattern = /jpg|gif|png|jpeg/i;
+	
+			return fileName.match(pattern);
+		}
+		
+		function getFileInfo(fullName){
+			
+			var fileName, imgsrc, getLink;
+			
+			var fileLink;
+			
+			if(checkImageType(fullName)){
+				imgsrc = "/sboard/register/displayFile?fileName="+fullName;
+				fileLink = fullName.substr(18);
+				
+				var front = fullName.substr(0,12);   //2019/11/26/
+				var end = fullName.substr(18);
+				
+				getLink = "/sboard/register/displayFile?fileName="+front+end;
+			}else{
+				//니가 추가해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				imgsrc = "/resources/images/book4.png";
+				fileLink = fullName.substr(12);
+				getLink="/sboard/register/displayFile?fileName="+fullName;
+			}
+			
+			fileName = fileLink.substr(fileLink.indexOf("_")+1);
+			
+			return {fileName:fileName, imgsrc:imgsrc, getLink:getLink, fullName:fullName};
+		}
+		
+	</script>
+	<script>
+		$("#registerForm").submit(function(event){
+			event.preventDefault();
+		
+		var that = $(this);
+		
+		var str = "";
+		
+		$(".uploadedList .delbtn").each(function(index){
+			str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>";
+		});
+		
+		that.append(str);
+		
+		that.get(0).submit();
+		});
+		//submit전 파일  삭제 처리
+		$(".uploadedList").on("click", "delbtn", function(event) {
+			var that = $(this);
+
+			$.ajax({
+				url : "/sboard/register/deleteFile",
+				type : "post",
+				data : {
+					fileName : $(this).attr("href")
+				},
+				dataType : "text",
+				success : function(result) {
+					if (result = 'deleted') {
+						alert("deleted");
+						that.parent("li").remove();
+					}
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>

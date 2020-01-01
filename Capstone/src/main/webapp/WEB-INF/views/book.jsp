@@ -265,9 +265,9 @@ body {
 												+ "\"></img></a><span class='thumbnail-border'></span><br>");
 										out.print("<p class='card-title'><b>" + results.get("title") + "</b></p><br>");
 										out.print(
-												"<button type='submit' class='btn btn-warning' id='testBtn' onclick=\"location.href='http://localhost:8080/bookbook/library?isbn="
-														+ results.get("isbn13") + "'\">도서관 검색</button>");
-										out.print("<p> isbn코드 : " + results.get("isbn13") + "</p>");
+												"<button type='submit' class='btn btn-warning' id='testBtn' onclick=\"location.href='/bookbook/library?isbn="
+														+ results.get("isbn13") + "'\">도서관 검색</button><br>");
+										//out.print("<p> isbn코드 : " + results.get("isbn13") + "</p>");
 										//out.print("link : <b>" + results.get("link") + "</b><br>");
 
 										if (test.get(items.size() + i).equals("") || test.get(items.size() + i).equals("-")

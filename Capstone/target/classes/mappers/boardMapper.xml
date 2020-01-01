@@ -11,6 +11,26 @@
 		values(#{title},#{writer},#{publisher},#{pubdate},#{img},#{isbn},#{org_price},#{sale_price},#{grade},#{content},#{phone},#{contraction},#{place})
 	</insert>
 
+	<insert id="addAttach">
+		insert into tbl_attach (fullName, bno)
+		values(#{fullName},LAST_INSERT_ID())
+	</insert>
+
+	<select id="getAttach" resultType="string">
+		select fullName
+		from tbl_attach
+		where bno = #{bno}
+		order by regdate
+	</select>
+	
+	<delete id="deleteAttach">
+		delete from tbl_attach where bno = #{bno}
+	</delete>
+	
+	<insert id="replaceAttach">
+		insert into tbl_attch(fullName, bno) values (#{fullName}, #{bno})
+	</insert>
+	
 	<select id="read" resultType="com.ssun.everybook.domain.BoardVO">
 		select bno, title, writer,
 		publisher, pubdate, img, isbn, org_price, sale_price, grade, content,
@@ -27,8 +47,7 @@
 		img=#{img}, isbn=#{isbn},
 		org_price=#{org_price},
 		sale_price=#{sale_price}, grade=#{grade}, content=#{content},
-		phone=#{phone}, contraction=#{contraction}, place=#{place} where bno
-		=#{bno}
+		phone=#{phone}, contraction=#{contraction}, place=#{place} where bno=#{bno}
 	</update>
 
 	<delete id="delete">
@@ -126,7 +145,8 @@
 				content
 				LIKE CONCAT('%', #{keyword}, '%')
 				OR
-				writer LIKE CONCAT('%', #{keyword}, '%')
+				writer LIKE CONCAT('%',
+				#{keyword}, '%')
 				OR
 				publisher LIKE CONCAT('%', #{keyword}, '%')
 				)

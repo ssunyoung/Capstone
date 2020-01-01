@@ -127,7 +127,6 @@ a:hover, a:active, a:focus {
 			<table cellspacing="0" border="1" summary="책검색 API 결과"
 				class="tbl_type tbl text-center">
 				<colgroup>
-					<col width="5%">
 					<col width="10%">
 					<col width="20%">
 					<col width="15%">
@@ -138,7 +137,6 @@ a:hover, a:active, a:focus {
 				</colgroup>
 				<thead>
 					<tr>
-						<th scope="col">num</th>
 						<th scope="col">책표지</th>
 						<th scope="col">책이름</th>
 						<th scope="col">저자</th>
@@ -150,9 +148,11 @@ a:hover, a:active, a:focus {
 				</thead>
 
 				<c:forEach items="${naverRes}" var="b" varStatus="status">
-					<tr class="__template"><td><c:out value="${status.index}" /></td></tr>
+					<%-- <tr class="__template"><td><c:out value="${status.index}" /></td></tr> --%>
 					<tr class="__template">
-						<td rowspan="2"><img src="${b.image}"></td>
+						<td rowspan="2"><img src="${b.image}">						
+						<input type='hidden' value="${b.image}" id="image${status.index}"/>
+						</td>
 						<td rowspan="4" width="800"><input value="${b.title}"
 							id="title${status.index}"  readonly /></td>
 						<td rowspan="2" width="200"><input value="${b.author}"
@@ -170,7 +170,7 @@ a:hover, a:active, a:focus {
 					</tr>
 
 					<tr class="__template">
-						<td colspan="7">${b.description}<input type="button"
+						<td colspan="7"><br>${b.description}<input type="button"
 							class="sch_smit" value="값 전달"
 							onclick="setParentText(${status.index}); window.close(); alert('자동완성 처리완료'); alert('나머지 정보를 입력해주세요.');" />
 
@@ -193,6 +193,8 @@ a:hover, a:active, a:focus {
 	<script type="text/javascript">
 		function setParentText(idx) {
 			console.log(idx+"인덱스번호ㅗㅗㅗㅗㅗ");
+			opener.document.getElementById("image").value = document
+			.getElementById("image"+idx).value;
 			opener.document.getElementById("title").value = document
 					.getElementById("title"+idx).value;
 			opener.document.getElementById("writer").value = document

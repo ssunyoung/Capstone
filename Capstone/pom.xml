@@ -32,7 +32,29 @@
 			<version>1.1.1</version>
 		</dependency>
 		<!-- Spring -->
-
+		<!-- Transaction 관련 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- AOP 관련 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
 		<!-- naver관련 -->
 		<dependency>
 			<groupId>net.sf.sociaal</groupId>
@@ -104,6 +126,18 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.16</version>
+		</dependency>
+		<!-- file upload -->
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.2</version>
 		</dependency>
 		<!-- AspectJ -->
 		<dependency>
