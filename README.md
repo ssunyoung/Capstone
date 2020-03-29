@@ -54,5 +54,5 @@
 - Naver 검색Api로 책이름을 검색하면 검색정보를 넘겨주도록 구현
 - 사용자는 나머지 정보만 채우면 되므로 편리함.
 
-## 보완점
-- 
+## ER다이어그램
+<img src="https://user-images.githubusercontent.com/50486476/77849068-d1e2ee00-7203-11ea-8977-f14c236cd35a.JPG" width="60%" />
