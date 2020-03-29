@@ -49,7 +49,7 @@
 - Ajax 이용한 파일첨부 구현
 
 ### [글작성시 자동완성]
-<img src="(https://user-images.githubusercontent.com/50486476/77848379-38194200-71ff-11ea-9d72-49c19f23ffff.png" width="60%" />
+<img src="https://user-images.githubusercontent.com/50486476/77848379-38194200-71ff-11ea-9d72-49c19f23ffff.png" width="60%" />
 
 - Naver 검색Api로 책이름을 검색하면 검색정보를 넘겨주도록 구현
 - 사용자는 나머지 정보만 채우면 되므로 편리함.
